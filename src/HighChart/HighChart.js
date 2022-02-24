@@ -28,7 +28,7 @@ const HighChrt = () => {
         standardDeviation: true,
     })
 
-    const { formatGraphData, calculateGraphAlertBands, chartDataFormatter, graphDataFormatter } = useGraphDataFormatter()
+    const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter()
     const alertBands = calculateGraphAlertBands(({
             highRed: "31",
             highAmber: "24",
@@ -45,12 +45,6 @@ const HighChrt = () => {
 
     HC_more(Highcharts);
     useEffect(() => {
-        fetchData()
-    
-        // console.log(graphDataFormatter(chartData))
-    },[])
-    
-    const fetchData = async () => {
         fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-01-22T05:32:33&stop_datetime=2022-02-21T05:32:33&id=4&resolution=daily")
         .then(res => res.json())
         .then(
@@ -59,7 +53,8 @@ const HighChrt = () => {
                 formatGraphData(result?.response)
             }
         )
-    }
+    },[formatGraphData])
+
 const graphContainers = useMemo(() => {
         return [
             {
@@ -71,17 +66,14 @@ const graphContainers = useMemo(() => {
                 }) 
             },
         ]
-    },[chartData]) 
-    // console.log("ddddd", graphContainers[0].data)
-    const graphValues = chartDataFormatter(chartData)
+    },[chartData, formatGraphData]) 
     const graphData = formatGraphData({
         timestamps: [1497398400000,1497484800000, 1497571200000, 1497830400000, 1497916800000, 1498435200000, 1498521600000, 1498608000000, 1498780800000, 1499040000000, 1499126400000, 1499212800000,1499299200000, 1499817600024, 1499904000000, 1500249600000, 1500940800000, 1501027200000, 1501113600000, 1501200000000, 1501459200000, 1501545600000, 1501632000000, 1501718400000, 1501804800000, 1502064000000, 1502150400000, 1502236800000, 1502323200000, 1502409600000, 1502668800000, 1502755200000,],
         vitals: [7, 10 ,13 ,20 ,22 ,30 ,31 ,32 ,32.5 ,30 ,28 ,26 ,24 ,10 ,9 ,11 ,28 ,29 ,30 ,31 ,32 ,31 ,30 ,29 ,28 ,20 ,18 ,16 ,14 ,13 ,13 ,15],
         heartRate: [12, 15 ,18 ,24 ,26 ,34 ,35 ,36 ,36.5 ,34 ,32 ,30 ,28 ,14 ,13 ,15 ,32 ,33 ,34 ,35 ,36 ,35 ,34 ,33 ,32 ,24 ,22 ,20 ,18 ,17 ,18 ,20],
         deviations: [3, 4, 5, 6, 3, 5, 6, 4, 3, 2, 4, 5, 2,  1, 3, 4, 4, 1, 2, 3, 4, 5, 3, 2, 4, 3, 4, 5, 2, 4, 2, 4]
     })
-    const graphDataWithDeviation = graphContainers.formattedVitals;
-    console.log(graphContainers)
+    // const graphDataWithDeviation = graphContainers.formattedVitals;
     const lineGraphData = graphContainers[0].data.lineChartValues;
     const lineChartValuesOnly = graphContainers[0].data.lineChartValuesOnly;
     const medianValue = graphContainers[0].data.median
@@ -103,7 +95,6 @@ const graphContainers = useMemo(() => {
     const deviationData = lineGraphData?.map((value) => {
         return [value[0], value[1] + standardDeviationCalulator(lineChartValuesOnly), value[1] - standardDeviationCalulator(lineChartValuesOnly)]
     })
-    // console.log("deviationData", deviationData)
     useEffect(() => {
         if (isCalculatedValueShown === true) {
             setBaselineValue(medianValue)
@@ -133,7 +124,6 @@ const graphContainers = useMemo(() => {
                     chart.myCustomLines = [];              
                     series?.forEach(function (series, j) {
                         series.data?.forEach(function (point, i) {
-                            // console.log("pont y",point.y)
                             chart.myCustomLine = chart?.renderer
                                 .path([
                                     "M",
@@ -146,7 +136,7 @@ const graphContainers = useMemo(() => {
                                 .attr({
                                     "stroke-width": 3,
                                     zIndex: 4,
-                                    stroke: point.y < 8 || point.y > 31 ? "#F3857C" : point.y >= 28 && point.y <= 31 || point.y >= 24 && point.y <= 25 ? "#FFB359" : "transparent",
+                                    stroke: point.y < 8 || point.y > 31 ? "#F3857C" : point.y >= (28 && point.y <= 31) || point.y >= (24 && point.y <= 25) ? "#FFB359" : "transparent",
                                     display: false
                                 })
                                 .add()
@@ -169,15 +159,11 @@ const graphContainers = useMemo(() => {
                     // })
                 },
                 load: async function () {
-                    const chart =  this;
-                    const series =  [chart.series[0]];      
-                    console.log()              
+                    const chart =  this;           
                     const data = await chart.series[0].data;
-                    alert("dddd")
-                    console.log("etxt", data)
                     setTimeout(() => {
                         const data = chart.series[0].data;
-                    data.map((element) => {
+                    data.forEach((element) => {
                         if (element.y > 8 || element.y < 31) {
                             element.update({
                                 color: '#F3857C',
@@ -188,7 +174,7 @@ const graphContainers = useMemo(() => {
                                     radius: 9
                                 }
                             })
-                        } else if (element.y >= 28 && element.y <= 31 || element.y >= 8 && element.y <= 12) {
+                        } else if (element.y >= (28 && element.y <= 31) || (element.y >= 8 && element.y) <= 12) {
                             element.update({
                                 color: '#FFB359',
                                 className: "markerShadow",
@@ -248,7 +234,7 @@ const graphContainers = useMemo(() => {
         plotOptions: {
             animation: false,
             line: {
-                dataLables: {
+                dataLables: { 
                     enabled: true
                 },
                 enableMouseTracking: false
@@ -265,7 +251,6 @@ const graphContainers = useMemo(() => {
             minorGridLineWidth: 0,
             tickLength: 9,
             tickWidth: 1.5,
-            minorGridLineWidth: 0,
             lineColor: 'transparent',
             accessibility: {
                 rangeDescription: 'Range: Jul 1st 2009 to Jul 31st 2009.'
@@ -296,7 +281,6 @@ const graphContainers = useMemo(() => {
             tickLength: 9,
             tickWidth: 1.5,
             color: "#242637",
-            gridLineColor: 'transparent',
             fontSize: "12px",
             min: null  ,
             // max: lowestYaxisValue ,
@@ -335,14 +319,14 @@ const graphContainers = useMemo(() => {
                 }
             ], plotBands: alertBands
         },
-        tooltip: {
-            formatter() {
-                const pointData = graphDataWithDeviation.find(row => row.timestamp === this.point.x)
-                return Highcharts.dateFormat('%A, %d %b %Y %H:%M', pointData.timestamp) + '<br><br>' +
-                    '<b>Temprature: </b>' + pointData.value + '<br>' +
-                    '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
-            }
-        },
+        // tooltip: {
+        //     formatter() {
+        //         const pointData = graphDataWithDeviation.find(row => row.timestamp === this.point.x)
+        //         return Highcharts.dateFormat('%A, %d %b %Y %H:%M', pointData.timestamp) + '<br><br>' +
+        //             '<b>Temprature: </b>' + pointData.value + '<br>' +
+        //             '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
+        //     }
+        // },
         series: [{
             name: 'Temperature',
             color: '#1499AD',
