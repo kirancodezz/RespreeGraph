@@ -160,7 +160,6 @@ const graphContainers = useMemo(() => {
                 },
                 load: async function () {
                     const chart =  this;           
-                    const data = await chart.series[0].data;
                     setTimeout(() => {
                         const data = chart.series[0].data;
                     data.forEach((element) => {
