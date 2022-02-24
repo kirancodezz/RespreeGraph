@@ -110,9 +110,9 @@ const Graph = ({
                     <p className="deviationHeader">Deviation<br></br><span>(From Baseline)</span></p>
                     <div className="DeviationChanger">
                         <div className="deviationControls">
-                            <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline-1)}}> <img src={require('../assets/right.png')} /><span>&#177;</span></button>
+                            <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline-1)}}> <img alt="controls" src={require('../assets/right.png')} /><span>&#177;</span></button>
                             <input type="text" defaultValue={`${deviationFromBaseline}%`}/>
-                            <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline+1)}} > <img src={require('../assets/play.png')} /> </button>
+                            <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline+1)}} > <img alt="controls" src={require('../assets/play.png')} /> </button>
                         </div>
                     </div>
                     <div className="container"> 

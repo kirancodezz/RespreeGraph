@@ -21,57 +21,6 @@ const useGraphDataFormatter = () => {
     }, [])
 
 
-
-    const vitalList = [
-        {vitalName: "Heart Rate", id: "HR", vitals: []},
-        {vitalName: "Respratory Rate", id: "RR", vitals: []},
-    ]
-
-    const graphDataFormatter = useCallback(({
-        metrics = [],
-    }) => {
-        const dateInMilliseconds = []
-        const vitals = {}
-        metrics?.listdate?.forEach((value, index) => {
-            let date = new Date(value);
-            dateInMilliseconds.push( date.getTime())
-        })
-        vitalList.forEach((item, index) => {
-            
-        })
-    },[])
-
-
-
-    const chartDataFormatter = useCallback(({
-        band = [],
-        metrics = [],
-        metrics_SD = [],
-
-    }) => {
-        const vitalList = []
-        const mainGraphValues = []
-        // const mainGraphVitalValues = []
-        const dateInMilliseconds = []
-        const HRvalues = []
-    
-        metrics?.listdate?.forEach((value, index) => {
-            let date = new Date(value);
-            dateInMilliseconds.push( date.getTime())
-        })
-
-        dateInMilliseconds.forEach((value, index) => {
-
-        })
-
-    },[])
-
-    
-
-
-
-
-
     const formatGraphData = useCallback(({
         timestamps = [],
         vitals = [],
@@ -191,7 +140,7 @@ const useGraphDataFormatter = () => {
         return [...highAlerts, ...lowAlerts]
 
     }, [])
-    return { formatGraphData, calculateGraphAlertBands, chartDataFormatter, graphDataFormatter }
+    return { formatGraphData, calculateGraphAlertBands }
 }
 
 export default useGraphDataFormatter;
