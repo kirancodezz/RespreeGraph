@@ -1,0 +1,86 @@
+- style each marker in line
+https://jsfiddle.net/BlackLabel/rt9zoxue/ 
+
+- vertical line from point 
+https://jsfiddle.net/e9aqyzqa
+https://jsfiddle.net/BlackLabel/9wxb58y2/
+
+- Area chart inside line chart
+https://jsfiddle.net/gh/get/library/pure/highcharts/highcharts/tree/master/samples/highcharts/plotoptions/series-negative-color/
+
+
+-multiple points in same y axix
+https://jsfiddle.net/BlackLabel/raqd9g6L/1/
+
+
+var ranges = [
+        [1248566400000, 16.6, 18.9],
+        [1248652800000, 11.9, 20.2],
+        [1248739200000, 11.0, 19.3],
+        [1248825600000, 10.8, 17.8],
+        [1248912000000, 11.8, 18.5],
+        [1248998400000, 10.8, 16.1]
+    ],
+    averages = [
+    		[1248566400000, 18],
+        [1248652800000, 15.2],
+        [1248739200000, 14.8],
+        [1248825600000, 14.4],
+        [1248912000000, 15],
+        [1248998400000, 13.6]
+    ];
+
+
+Highcharts.chart('container', {
+    title: {
+        text: 'July temperatures'
+    },
+
+    xAxis: {
+        type: 'datetime',
+        accessibility: {
+            rangeDescription: 'Range: Jul 1st 2009 to Jul 31st 2009.'
+        }
+    },
+
+    yAxis: {
+        title: {
+            text: null
+        }
+    },
+
+    tooltip: {
+        /* crosshairs: true, */
+       /*  shared: true,
+        valueSuffix: '°C' */
+    },
+
+    series: [{
+        name: 'Temperature',
+        data: averages,
+        type: 'spline',
+        zIndex: 1,
+        marker: {
+            fillColor: 'white',
+            lineWidth: 2,
+            lineColor: Highcharts.getOptions().colors[0]
+        }
+    }, {
+        name: 'Range',
+        data: ranges,
+        type: 'areasplinerange',
+        lineWidth: 0,
+        linkedTo: ':previous',
+        color: Highcharts.getOptions().colors[0],
+        fillOpacity: 0.3,
+        zIndex: 0,
+        marker: {
+            enabled: false
+        }
+    }]
+});
+
+
+
+
+- LicenseID: 200007808-28ol6z
