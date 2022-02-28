@@ -9,12 +9,12 @@ import useGraphDataFormatter from "../Graph/hooks/useGraphDataFormatter";
 
 
 const HighChrt = () => {
-    const [chartData, setChartData]  = useState({})
-    const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
-    const [baseLineValue, setBaselineValue] = useState(0);
-    const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
     const [yAxisMax, setYAxisMax] = useState(0);
     const [yAxisMin, setYAxisMin] = useState(0);
+    const [chartData, setChartData]  = useState({})
+    const [baseLineValue, setBaselineValue] = useState(0);
+    const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
+    const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
     const [isCalculatedValueShown, setIsCalculatedValueShown] = useState(true)
     const [baseLineUpperDeviation, setBaseLineUpperDeviation] = useState(true)
     const [baseLineLowerDeveiation, setBaseLineLowerDeveiation] = useState(true)
@@ -29,15 +29,16 @@ const HighChrt = () => {
     })
 
     const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter()
-    const alertBands = calculateGraphAlertBands(({
-            highRed: "31",
-            highAmber: "24",
-            lowAmber: "12",
-            lowRed: "10",
-            yAxisMax: yAxisMax,
-            yAxisMin: yAxisMin
-    }))
-
+    // TODO: If no value set the value as undefined
+    const alertThresholds = {
+        highRed: "30",
+        highAmber: "25",
+        lowAmber: "15",
+        lowRed: "10",
+        yAxisMax: yAxisMax,
+        yAxisMin: yAxisMin
+    }
+    const alertBands = calculateGraphAlertBands((alertThresholds))
     const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     const onGraphCheckboxClicked = (checkbox, boolean) => {
         setGraphComponentCheckbox({ ...graphComponentsCheckbox, [checkbox]: boolean })
@@ -58,15 +59,51 @@ const HighChrt = () => {
 const graphContainers = useMemo(() => {
         return [
             {
-                name: "RR", 
+                name: "HR", 
                 data: formatGraphData({
                     timestamps: chartData?.metrics?.listdate,
-                    vitals: chartData?.metrics?.["RR"],
+                    // vitals: chartData?.metrics?.["RR"], 
+                    vitals: [
+                        11,
+                        10,
+                        25,
+                        32,
+                        24,
+                        24,
+                        25,
+                        25,
+                        25,
+                        24,
+                        23,
+                        24,
+                        25,
+                        23,
+                        24,
+                        22,
+                        24,
+                        24,
+                        23,
+                        23,
+                        22,
+                        20,
+                        21,
+                        21,
+                        21,
+                        20,
+                        22,
+                        19,
+                        19,
+                        20
+                    ], 
                     deviations: chartData?.metrics_SD?.["RR"]
                 }) 
             },
         ]
     },[chartData, formatGraphData]) 
+
+    const markerColorSetter = (value) => {
+        
+    }
     const graphData = formatGraphData({
         timestamps: [1497398400000,1497484800000, 1497571200000, 1497830400000, 1497916800000, 1498435200000, 1498521600000, 1498608000000, 1498780800000, 1499040000000, 1499126400000, 1499212800000,1499299200000, 1499817600024, 1499904000000, 1500249600000, 1500940800000, 1501027200000, 1501113600000, 1501200000000, 1501459200000, 1501545600000, 1501632000000, 1501718400000, 1501804800000, 1502064000000, 1502150400000, 1502236800000, 1502323200000, 1502409600000, 1502668800000, 1502755200000,],
         vitals: [7, 10 ,13 ,20 ,22 ,30 ,31 ,32 ,32.5 ,30 ,28 ,26 ,24 ,10 ,9 ,11 ,28 ,29 ,30 ,31 ,32 ,31 ,30 ,29 ,28 ,20 ,18 ,16 ,14 ,13 ,13 ,15],
@@ -110,7 +147,7 @@ const graphContainers = useMemo(() => {
             title: "",
             type: 'spline',
             zoomType: 'x',
-            animation: false,
+            animation: true,
             scrollablePlotArea: {
                 minWidth: 500,
                 scrollPositionX: 1
@@ -120,104 +157,76 @@ const graphContainers = useMemo(() => {
                     const chart = this;
                     setYAxisMax(chart.axes[1].max)
                     setYAxisMin(chart.axes[1].min)
-                    const series = [chart.series[0]];      
-                    chart.myCustomLines = [];              
-                    series?.forEach(function (series, j) {
-                        series.data?.forEach(function (point, i) {
-                            chart.myCustomLine = chart?.renderer
-                                .path([
-                                    "M",
-                                    chart.plotLeft + point.plotX,
-                                    chart.plotTop + point.plotY,
-                                    "L",
-                                    chart.plotLeft + point.plotX,
-                                    chart.plotSizeY + chart.plotTop
-                                ])
-                                .attr({
-                                    "stroke-width": 3,
-                                    zIndex: 4,
-                                    stroke: point.y < 8 || point.y > 31 ? "#F3857C" : point.y >= (28 && point.y <= 31) || point.y >= (24 && point.y <= 25) ? "#FFB359" : "transparent",
-                                    display: false
-                                })
-                                .add()
-                            chart.myCustomLines.push(chart.myCustomLine);
-                        });
-                    });
-                    // const data = chart.series[0].data;
-                    // data.map((element) => {
-                    //     if (element.y > 8 || element.y < 31) {
-                    //         element.update({
-                    //             color: '#F3857C',
-                    //             className: "markerShadow",
-                    //             marker: {
-                    //                 zIndex: 100,
-                    //                 // radius: 4+(100 * element.y) / 200
-                    //                 radius: 9
-                    //             }
-                    //         })
-                    //     } 
-                    // })
                 },
-                load: async function () {
+                load: function () {
                     const chart =  this;           
                     setTimeout(() => {
-                        const data = chart.series[0].data;
+                        const series = [chart.series?.[0]];  
+                        chart.myCustomLines = [];        
+                        series?.forEach(function (series, j) {
+                            series.data?.forEach(function (point, i) {
+                                chart.myCustomLine = chart?.renderer
+                                    .path([
+                                        "M",
+                                        chart.plotLeft + point.plotX,
+                                        chart.plotTop + point.plotY,
+                                        "L",
+                                        chart.plotLeft + point.plotX,
+                                        chart.plotSizeY + chart.plotTop
+                                    ])
+                                    .attr({
+                                        "stroke-width": 3,
+                                        zIndex: 4,
+                                        stroke: point.y >= alertThresholds.highRed ? "#F3857C" : 
+                                        point.y >= alertThresholds.highAmber ? "#FFB359" : 
+                                        point.y <= alertThresholds.lowAmber ? "#FFB359" :
+                                        point.y <= alertThresholds.lowRed ? "#F3857C" :
+                                        "transparent",
+                                        display: false
+                                    })
+                                    .add()
+                                chart.myCustomLines.push(chart.myCustomLine);
+                            });
+                        });    
+                    const data = chart.series[0].data;
                     data.forEach((element) => {
-                        if (element.y > 8 || element.y < 31) {
                             element.update({
-                                color: '#F3857C',
+                                color: 
+                                element.y >= alertThresholds.highRed ? "#F3857C" : 
+                                element.y >= alertThresholds.highAmber ? "#FFB359" : 
+                                element.y <= alertThresholds.lowAmber ? "#FFB359" :
+                                element.y <= alertThresholds.lowRed ? "#F3857C" :
+                                "#23BCD2",
                                 className: "markerShadow",
                                 marker: {
-                                    zIndex: 100,
-                                    // radius: 4+(100 * element.y) / 200
+                                    zIndex: 1000,
                                     radius: 9
                                 }
                             })
-                        } else if (element.y >= (28 && element.y <= 31) || (element.y >= 8 && element.y) <= 12) {
-                            element.update({
-                                color: '#FFB359',
-                                className: "markerShadow",
-                                marker: {
-                                    zIndex: 10,
-                                    radius: 9
-                                }
-                            })
-                        } else {
-                            element.update({
-                                color: '#23BCD2',
-                                className: "markerShadow",
-                                marker: {
-                                    // radius: (100 * element.y) / 200
-                                    zIndex: 10,
-                                    radius: 9
-                                }
-                            })
-                        }
                     })
-                    },300)
-                    
-    
-                    
+                    },900)
                 },
                 render: function () {
-                    var chart = this,
-                        series = [chart.series[0]];
-                    series.forEach(function (series, j) {
-                        series.data.forEach(function (point, i) {
-                            chart.myCustomLines[i]?.attr({
-                                d: [
-                                    "M",
-                                    chart.plotLeft + point.plotX,
-                                    chart.plotTop + point.plotY,
-                                    "L",
-                                    chart.plotLeft + point.plotX,
-                                    chart.plotSizeY + chart.plotTop
-                                ]
-                            })?.attr({
-                                "stroke-width": thresholdIndicator ? 4 : 0,
+                    let chart = this;
+                    setTimeout(() => {
+                        const series = [chart?.series?.[0]] ;
+                        series.forEach(function (series, j) {
+                            series.data.forEach(function (point, i) {
+                                chart.myCustomLines[i]?.attr({
+                                    d: [
+                                        "M",
+                                        chart.plotLeft + point.plotX,
+                                        chart.plotTop + point.plotY,
+                                        "L",
+                                        chart.plotLeft + point.plotX,
+                                        chart.plotSizeY + chart.plotTop
+                                    ]
+                                })?.attr({
+                                    "stroke-width": thresholdIndicator ? 4 : 0,
+                                });
                             });
                         });
-                    });
+                    },50)
                 }
             }
         },
@@ -231,7 +240,7 @@ const graphContainers = useMemo(() => {
             enabled: true
         },
         plotOptions: {
-            animation: false,
+            animation: true,
             line: {
                 dataLables: { 
                     enabled: true
@@ -266,12 +275,6 @@ const graphContainers = useMemo(() => {
 
             },
             tickColor: '#164f57ba',
-            plotLines: [{
-                color: '#FF0000',
-                width: 2,
-                value: 3,
-                from: 20
-            }]
         },
         yAxis: {
             gridLineWidth: 0,
@@ -341,7 +344,7 @@ const graphContainers = useMemo(() => {
                     fillColor: 'transparent',
                 },
                 {
-                    value: 32,
+                    value: yAxisMax,
                     fillColor: deviationIndicator ? "#BDDBFF" : "transparent",
                 }
             ]

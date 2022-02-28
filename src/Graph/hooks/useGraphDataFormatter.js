@@ -73,13 +73,21 @@ const useGraphDataFormatter = () => {
                 highAlerts =  [
                         {
                             className: "redBorder",
-                            color: "#ffd3d2",
+                            color: {
+                            linearGradient: { cx: 0.5, cy: 0.5, r: 0.5 },
+                            zIndex: "-1",
+                            stops: [
+                               [0, '#ffd3d2'],
+                               [1, '#ffd3d257']
+                            ]
+                        },
                             from: alertsBands.yAxisMax,
                             to: alertsBands?.highRed
                         },
                         {
                             className: "",
-                            color: "#ffe8cf",
+                            zIndex: "-1",
+                            color: "#FFE8CF",
                             from: alertsBands.highRed,
                             to: alertsBands.highAmber
                         }
@@ -88,13 +96,21 @@ const useGraphDataFormatter = () => {
                 highAlerts = [
                     {
                         className: "redBorder",
-                        color: "#ffd3d2",
+                        zIndex: "-1",
+                        color: {
+                            linearGradient: { cx: 0.5, cy: 0.5, r: 0.5 },
+                            stops: [
+                               [0, '#ffd3d2'],
+                               [1, '#ffd3d257']
+                            ]
+                        },
                         from: alertsBands.yAxisMax,
                         to: alertsBands?.highAmber
                     },
                     {
                         className: "",
-                        color: "#ffe8cf",
+                        zIndex: "-1",
+                        color: "#FFE8CF",
                         from: alertsBands.highAmber,
                         to: alertsBands.highRed
                     }
@@ -108,12 +124,20 @@ const useGraphDataFormatter = () => {
                 lowAlerts =  [
                         {
                             className: "redBorder",
-                            color: "#ffd3d2",
+                            zIndex: "-1",
+                            color: {
+                            linearGradient: { cx: 0.5, cy: 0.5, r: 0.5 },
+                            stops: [
+                               [0, '#ffd3d2'],
+                               [1, '#ffd3d257']
+                            ]
+                        },
                             from: alertsBands.yAxisMin,
                             to: alertsBands?.lowRed
                         },
                         {
                             className: "",
+                            zIndex: "-1",
                             color: "#FFE8CF",
                             from: alertsBands.lowRed,
                             to: alertsBands.lowAlerts
@@ -123,12 +147,21 @@ const useGraphDataFormatter = () => {
                 lowAlerts = [
                     {
                         className: "redBorder",
-                        color: "#ffd3d2",
+                        zIndex: "-1",
+                        color: {
+                            linearGradient: { cx: 0.5, cy: 0.5, r: 0.5 },
+                            stops: [
+                               [0, '#ffd3d2'],
+                               [1, '#ffd3d257']
+                            ]
+                        },
+                        
                         from: alertsBands.yAxisMin,
                         to: alertsBands?.lowAmber
                     },
                     {
                         className: "",
+                        zIndex: "-1",
                         color: "#FFE8CF",
                         from: alertsBands.lowAmber,
                         to: alertsBands.lowRed

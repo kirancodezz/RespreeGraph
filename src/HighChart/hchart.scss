@@ -138,7 +138,9 @@
 }
 
 .redBorder {
-    
+  stroke: #646464;
+  stroke-width: 1px;
+  stroke-linejoin: round;
 }
 .daydateWrapper {
     text-align: center;
