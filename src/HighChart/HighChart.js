@@ -108,13 +108,13 @@ const HighChrt = () => {
         heartRate: [12, 15, 18, 24, 26, 34, 35, 36, 36.5, 34, 32, 30, 28, 14, 13, 15, 32, 33, 34, 35, 36, 35, 34, 33, 32, 24, 22, 20, 18, 17, 18, 20],
         deviations: [3, 4, 5, 6, 3, 5, 6, 4, 3, 2, 4, 5, 2, 1, 3, 4, 4, 1, 2, 3, 4, 5, 3, 2, 4, 3, 4, 5, 2, 4, 2, 4]
     })
-    // const graphDataWithDeviation = graphContainers.formattedVitals;
+    const graphDataWithDeviation = graphContainers[0].data.formattedVitals;
     const lineGraphData = graphContainers[0].data.lineChartValues;
     const lineChartValuesOnly = graphContainers[0].data.lineChartValuesOnly;
     const medianValue = graphContainers[0].data.median
     const deviationGraph = graphContainers[0].data?.deviationGraph
     const heartRateData = graphData.heartrateValues;
-
+    console.log(graphContainers[0].data?.deviationGraph)
     // Find Standard deviation
     const standardDeviationCalulator = (arr) => {
         let mean = arr.reduce((acc, curr) => {
@@ -319,14 +319,14 @@ const HighChrt = () => {
                 }
             ], plotBands: alertBands
         },
-        // tooltip: {
-        //     formatter() {
-        //         const pointData = graphDataWithDeviation.find(row => row.timestamp === this.point.x)
-        //         return Highcharts.dateFormat('%A, %d %b %Y %H:%M', pointData.timestamp) + '<br><br>' +
-        //             '<b>Temprature: </b>' + pointData.value + '<br>' +
-        //             '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
-        //     }
-        // },
+        tooltip: {
+            formatter() {
+                const pointData = graphDataWithDeviation.find(row => row.timestamp === this.point.x)
+                return Highcharts.dateFormat('%A, %d %b %Y %H:%M', pointData.timestamp) + '<br><br>' +
+                    '<b>Temprature: </b>' + pointData.value + '<br>' +
+                    '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
+            }
+        },
         series: [{
             name: 'Temperature',
             color: '#1499AD',
