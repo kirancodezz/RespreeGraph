@@ -2,6 +2,15 @@ import { useCallback } from "react";
 import { isEmpty } from "lodash";
 import moment from "moment";
 
+// const alertBandColorGradients={
+//   red:["#ffd3d2", "#ffd3d2"],
+//   amber:["#FFE8CF", "#FFE8CF"]
+// }
+// const alertBands={
+//   RED:'RED',
+//   AMBER:'AMBER'
+// }
+
 const useGraphDataFormatter = () => {
   const medianCalculator = useCallback((values) => {
     if (values.length === 0) {
@@ -64,6 +73,36 @@ const useGraphDataFormatter = () => {
     },
     [medianCalculator]
   );
+  /**
+   * @param alertBand red|amber
+   * @param range -[from,to]
+   * @param visibility boolean
+   * @param className- string
+   * 
+   * 
+   */
+  // const createAlertBands=(alertBand="",range=[0,0],visibility=false,className="")=>{
+//   const createAlertBands=({redBand={
+//     alertBand="",range=[0,0],visibility=false,className=""
+//   },amberband={
+//     alertBand="",range=[0,0],visibility=false,className=""
+//   }})=>{
+
+    
+//     if(isEmpty(range)||isEmpty(alertBand)){
+//       return {};
+//     }
+//     const [from,to]=range;
+//     return {
+//       className,
+//       visibility,
+//       stops:alertBand===alertBands.RED ? alertBandColorGradients.red :alertBand=== alertBands.AMBER ? alertBandColorGradients.amber :[],
+//       from,
+//       to,
+//     }
+//   }
+
+//   createAlertBands({redBand:{},amber:{}})
 
   const calculateGraphAlertBands = useCallback(
     (
@@ -79,8 +118,10 @@ const useGraphDataFormatter = () => {
       }
     ) => {
       let alerts = [];
+
       if (alertsBands?.highRed && alertsBands?.highAmber) {
         if (alertsBands?.highRed > alertsBands?.highAmber) {
+          
           alerts.push(
             { className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
             { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFE8CF", "#FFE8CF"], from: alertsBands.highRed, to: alertsBands.highAmber }

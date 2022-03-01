@@ -12,6 +12,7 @@ const HighChrt = () => {
     const [yAxisMax, setYAxisMax] = useState(0);
     const [yAxisMin, setYAxisMin] = useState(0);
     const [chartData, setChartData] = useState({})
+    const [chartRange, setChartRange] = useState(1)
     const [baseLineValue, setBaselineValue] = useState(0);
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
@@ -114,7 +115,6 @@ const HighChrt = () => {
     const medianValue = graphContainers[0].data.median
     const deviationGraph = graphContainers[0].data?.deviationGraph
     const heartRateData = graphData.heartrateValues;
-    console.log(graphContainers[0].data?.deviationGraph)
     // Find Standard deviation
     const standardDeviationCalulator = (arr) => {
         let mean = arr.reduce((acc, curr) => {
@@ -144,12 +144,20 @@ const HighChrt = () => {
         chart: {
             title: "",
             type: 'spline',
-            zoomType: 'x',
-            animation: true,
+            // new
+            panning: true,
+            zoomType: false,
+            pinchType: false,
             scrollablePlotArea: {
-                minWidth: 500,
                 scrollPositionX: 1
-            },
+              },
+            // 
+            // zoomType: 'x',
+            animation: true,
+            // scrollablePlotArea: {
+            //     minWidth: 500,
+            //     scrollPositionX: 1
+            // },
             events: {
                 redraw: function () {
                     const chart = this;
@@ -206,6 +214,27 @@ const HighChrt = () => {
                 },
                 render: function () {
                     let chart = this;
+                    chart.renderer
+                    .button("+", 1300, 280, function() {
+                        setChartRange(chartRange+1)
+                    })
+                    .attr({
+                      zIndex: 3,
+                      className: "zoombutton",
+                    })
+                    .add();
+
+                    chart.renderer
+                    .button("-", 1250, 280, function() {
+                        setChartRange(chartRange-1)
+                    })
+                    .attr({
+                      className: "zoombutton",
+                      zIndex: 3
+                    })
+                    .add();
+
+
                     setTimeout(() => {
                         const series = [chart?.series?.[0]];
                         series.forEach(function (series, j) {
@@ -251,6 +280,7 @@ const HighChrt = () => {
         //     }
         // },
         xAxis: {
+            range: chartRange,
             type: 'datetime',
             gridLineWidth: 0,
             gridLineColor: "white",
@@ -323,8 +353,8 @@ const HighChrt = () => {
             formatter() {
                 const pointData = graphDataWithDeviation.find(row => row.timestamp === this.point.x)
                 return Highcharts.dateFormat('%A, %d %b %Y %H:%M', pointData.timestamp) + '<br><br>' +
-                    '<b>Temprature: </b>' + pointData.value + '<br>' +
-                    '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
+                    '<b>Temprature: </b>' + pointData.value + '<br>' 
+                    // '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
             }
         },
         series: [{
