@@ -86,7 +86,7 @@ const Graph = ({
                 <div className="rightControls">
                     <div className="controlsElements baslineControl">
                         <p className="headerLabel">Baseline <br/> value</p>
-                        <div className="baselineValueContainer" onClick={() => {setIsCalculatedValueShown(false) }}>
+                        <div className="baselineValueContainer">
                         <input 
                             type="number" 
                             className="baseLineValue" 
@@ -110,8 +110,8 @@ const Graph = ({
                     <p className="deviationHeader">Deviation<br></br><span>(From Baseline)</span></p>
                     <div className="DeviationChanger">
                         <div className="deviationControls">
-                            <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline-1)}}> <img alt="controls" src={require('../assets/right.png')} /><span>&#177;</span></button>
-                            <input type="text" defaultValue={`${deviationFromBaseline}%`}/>
+                            <button className="leftButton" onClick={() => {setDeviationFromBaseline(deviationFromBaseline-1)}}> <img alt="controls" src={require('../assets/right.png')} /><span>&#177;</span></button>
+                            <input type="text" value={`${deviationFromBaseline}%`} onChange={() => {}}/>
                             <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline+1)}} > <img alt="controls" src={require('../assets/play.png')} /> </button>
                         </div>
                     </div>

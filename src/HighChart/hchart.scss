@@ -6,13 +6,20 @@
         background-color: #dde6ff;
         border-radius: 3px;
         padding: 6px;
+        .leftButton {
+            padding-right: 0;
+            padding-left: 4px;
+        }
+        span {
+            margin-left: 5px;
+        }
         input {
             border: 0;
             text-align: center;
             width: 40px;
             width: 40px;
             height: 18px;
-            padding: 5px;
+            padding: 5px 0;
             font-weight: 600;
             font-size: 14px;
             pointer-events: none;
@@ -137,10 +144,9 @@
     margin: auto;
 }
 
-.redBorder {
-  stroke: #646464;
-  stroke-width: 1px;
-  stroke-linejoin: round;
+.redBorder ::before{
+    content: url(data:image/svg+xml,%0A%3Csvg%20id%3D%22Layer%5f1%22%20data-name%3D%22Layer%201%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2015.37%20188.41%22%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill%3A%23aeadad%3B%7D%3C%2Fstyle%3E%3C%2Fdefs%3E%3Ccircle%20class%3D%22cls-1%22%20cx%3D%227.69%22%20cy%3D%227.69%22%20r%3D%227.69%22%2F%3E%3Crect%20class%3D%22cls-1%22%20x%3D%226.69%22%20y%3D%2227.72%22%20width%3D%222%22%20height%3D%22160.69%22%2F%3E%3C%2Fsvg%3E%0A);
+
 }
 .daydateWrapper {
     text-align: center;

@@ -11,7 +11,7 @@ import useGraphDataFormatter from "../Graph/hooks/useGraphDataFormatter";
 const HighChrt = () => {
     const [yAxisMax, setYAxisMax] = useState(0);
     const [yAxisMin, setYAxisMin] = useState(0);
-    const [chartData, setChartData]  = useState({})
+    const [chartData, setChartData] = useState({})
     const [baseLineValue, setBaselineValue] = useState(0);
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
@@ -27,7 +27,7 @@ const HighChrt = () => {
         thresholdIndicator: true,
         standardDeviation: true,
     })
-
+    const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter()
     // TODO: If no value set the value as undefined
     const alertThresholds = {
@@ -36,10 +36,11 @@ const HighChrt = () => {
         lowAmber: "15",
         lowRed: "10",
         yAxisMax: yAxisMax,
-        yAxisMin: yAxisMin
+        yAxisMin: yAxisMin,
+        amberThreshold: amberThreshold,
+        redThreshold: redThreshold
     }
     const alertBands = calculateGraphAlertBands((alertThresholds))
-    const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     const onGraphCheckboxClicked = (checkbox, boolean) => {
         setGraphComponentCheckbox({ ...graphComponentsCheckbox, [checkbox]: boolean })
     }
@@ -47,19 +48,19 @@ const HighChrt = () => {
     HC_more(Highcharts);
     useEffect(() => {
         fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-01-22T05:32:33&stop_datetime=2022-02-21T05:32:33&id=4&resolution=daily")
-        .then(res => res.json())
-        .then(
-            (result) => {
-                setChartData(result?.response)
-                formatGraphData(result?.response)
-            }
-        )
-    },[formatGraphData])
+            .then(res => res.json())
+            .then(
+                (result) => {
+                    setChartData(result?.response)
+                    formatGraphData(result?.response)
+                }
+            )
+    }, [formatGraphData])
 
-const graphContainers = useMemo(() => {
+    const graphContainers = useMemo(() => {
         return [
             {
-                name: "HR", 
+                name: "HR",
                 data: formatGraphData({
                     timestamps: chartData?.metrics?.listdate,
                     // vitals: chartData?.metrics?.["RR"], 
@@ -94,18 +95,18 @@ const graphContainers = useMemo(() => {
                         19,
                         19,
                         20
-                    ], 
+                    ],
                     deviations: chartData?.metrics_SD?.["RR"]
-                }) 
+                })
             },
         ]
-    },[chartData, formatGraphData]) 
+    }, [chartData, formatGraphData])
 
     const graphData = formatGraphData({
-        timestamps: [1497398400000,1497484800000, 1497571200000, 1497830400000, 1497916800000, 1498435200000, 1498521600000, 1498608000000, 1498780800000, 1499040000000, 1499126400000, 1499212800000,1499299200000, 1499817600024, 1499904000000, 1500249600000, 1500940800000, 1501027200000, 1501113600000, 1501200000000, 1501459200000, 1501545600000, 1501632000000, 1501718400000, 1501804800000, 1502064000000, 1502150400000, 1502236800000, 1502323200000, 1502409600000, 1502668800000, 1502755200000,],
-        vitals: [7, 10 ,13 ,20 ,22 ,30 ,31 ,32 ,32.5 ,30 ,28 ,26 ,24 ,10 ,9 ,11 ,28 ,29 ,30 ,31 ,32 ,31 ,30 ,29 ,28 ,20 ,18 ,16 ,14 ,13 ,13 ,15],
-        heartRate: [12, 15 ,18 ,24 ,26 ,34 ,35 ,36 ,36.5 ,34 ,32 ,30 ,28 ,14 ,13 ,15 ,32 ,33 ,34 ,35 ,36 ,35 ,34 ,33 ,32 ,24 ,22 ,20 ,18 ,17 ,18 ,20],
-        deviations: [3, 4, 5, 6, 3, 5, 6, 4, 3, 2, 4, 5, 2,  1, 3, 4, 4, 1, 2, 3, 4, 5, 3, 2, 4, 3, 4, 5, 2, 4, 2, 4]
+        timestamps: [1497398400000, 1497484800000, 1497571200000, 1497830400000, 1497916800000, 1498435200000, 1498521600000, 1498608000000, 1498780800000, 1499040000000, 1499126400000, 1499212800000, 1499299200000, 1499817600024, 1499904000000, 1500249600000, 1500940800000, 1501027200000, 1501113600000, 1501200000000, 1501459200000, 1501545600000, 1501632000000, 1501718400000, 1501804800000, 1502064000000, 1502150400000, 1502236800000, 1502323200000, 1502409600000, 1502668800000, 1502755200000,],
+        vitals: [7, 10, 13, 20, 22, 30, 31, 32, 32.5, 30, 28, 26, 24, 10, 9, 11, 28, 29, 30, 31, 32, 31, 30, 29, 28, 20, 18, 16, 14, 13, 13, 15],
+        heartRate: [12, 15, 18, 24, 26, 34, 35, 36, 36.5, 34, 32, 30, 28, 14, 13, 15, 32, 33, 34, 35, 36, 35, 34, 33, 32, 24, 22, 20, 18, 17, 18, 20],
+        deviations: [3, 4, 5, 6, 3, 5, 6, 4, 3, 2, 4, 5, 2, 1, 3, 4, 4, 1, 2, 3, 4, 5, 3, 2, 4, 3, 4, 5, 2, 4, 2, 4]
     })
     // const graphDataWithDeviation = graphContainers.formattedVitals;
     const lineGraphData = graphContainers[0].data.lineChartValues;
@@ -156,10 +157,10 @@ const graphContainers = useMemo(() => {
                     setYAxisMin(chart.axes[1].min)
                 },
                 load: function () {
-                    const chart =  this;           
+                    const chart = this;
                     setTimeout(() => {
-                        const series = [chart.series?.[0]];  
-                        chart.myCustomLines = [];        
+                        const series = [chart.series?.[0]];
+                        chart.myCustomLines = [];
                         series?.forEach(function (series, j) {
                             series.data?.forEach(function (point, i) {
                                 chart.myCustomLine = chart?.renderer
@@ -174,42 +175,42 @@ const graphContainers = useMemo(() => {
                                     .attr({
                                         "stroke-width": 3,
                                         zIndex: 4,
-                                        stroke: point.y >= alertThresholds.highRed ? "#F3857C" : 
-                                        point.y >= alertThresholds.highAmber ? "#FFB359" : 
-                                        point.y <= alertThresholds.lowAmber ? "#FFB359" :
-                                        point.y <= alertThresholds.lowRed ? "#F3857C" :
-                                        "transparent",
+                                        stroke: point.y >= alertThresholds.highRed ? "#F3857C" :
+                                            point.y >= alertThresholds.highAmber ? "#FFB359" :
+                                                point.y <= alertThresholds.lowAmber ? "#FFB359" :
+                                                    point.y <= alertThresholds.lowRed ? "#F3857C" :
+                                                        "transparent",
                                         display: false
                                     })
                                     .add()
                                 chart.myCustomLines.push(chart.myCustomLine);
                             });
-                        });    
-                    const data = chart.series[0].data;
-                    data.forEach((element) => {
+                        });
+                        const data = chart.series[0].data;
+                        data.forEach((element) => {
                             element.update({
-                                color: 
-                                element.y >= alertThresholds.highRed ? "#F3857C" : 
-                                element.y >= alertThresholds.highAmber ? "#FFB359" : 
-                                element.y <= alertThresholds.lowAmber ? "#FFB359" :
-                                element.y <= alertThresholds.lowRed ? "#F3857C" :
-                                "#23BCD2",
+                                color:
+                                    element.y >= alertThresholds.highRed ? "#F3857C" :
+                                        element.y >= alertThresholds.highAmber ? "#FFB359" :
+                                            element.y <= alertThresholds.lowAmber ? "#FFB359" :
+                                                element.y <= alertThresholds.lowRed ? "#F3857C" :
+                                                    "#23BCD2",
                                 className: "markerShadow",
                                 marker: {
                                     zIndex: 1000,
                                     radius: 9
                                 }
                             })
-                    })
-                    },900)
+                        })
+                    }, 900)
                 },
                 render: function () {
                     let chart = this;
                     setTimeout(() => {
-                        const series = [chart?.series?.[0]] ;
+                        const series = [chart?.series?.[0]];
                         series.forEach(function (series, j) {
-                            series.data.forEach(function (point, i) {
-                                chart.myCustomLines[i]?.attr({
+                            series?.data?.forEach(function (point, i) {
+                                chart?.myCustomLines?.[i]?.attr({
                                     d: [
                                         "M",
                                         chart.plotLeft + point.plotX,
@@ -223,7 +224,7 @@ const graphContainers = useMemo(() => {
                                 });
                             });
                         });
-                    },50)
+                    }, 50)
                 }
             }
         },
@@ -234,12 +235,12 @@ const graphContainers = useMemo(() => {
             enabled: false
         },
         legend: {
-            enabled: true
+            enabled: false
         },
         plotOptions: {
             animation: true,
             line: {
-                dataLables: { 
+                dataLables: {
                     enabled: true
                 },
                 enableMouseTracking: false
@@ -269,7 +270,6 @@ const graphContainers = useMemo(() => {
                     return `<div class="daydateWrapper"><p class="dayDate" >${month}<br></p><p class="dayStyle">${day}</p></div>`
 
                 }
-
             },
             tickColor: '#164f57ba',
         },
@@ -277,12 +277,13 @@ const graphContainers = useMemo(() => {
             gridLineWidth: 0,
             gridLineColor: "white",
             minorGridLineWidth: 0,
+            tickInterval: 10,
             tickLength: 9,
             tickWidth: 1.5,
             color: "#242637",
             fontSize: "12px",
-            min: null  ,
-            // max: lowestYaxisValue ,
+            min: 0,
+            max: 35,
             tickColor: '#164f57ba',
             title: {
                 text: null
@@ -360,8 +361,8 @@ const graphContainers = useMemo(() => {
             marker: {
                 enabled: false
             },
-            
-        }, 
+
+        },
         {
             name: 'Heart Rate',
             data: heartRateData,
