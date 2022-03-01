@@ -12,7 +12,7 @@ const HighChrt = () => {
     const [yAxisMax, setYAxisMax] = useState(0);
     const [yAxisMin, setYAxisMin] = useState(0);
     const [chartData, setChartData] = useState({})
-    const [chartRange, setChartRange] = useState(1)
+    // const [chartRange, setChartRange] = useState(10)
     const [baseLineValue, setBaselineValue] = useState(0);
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
@@ -79,7 +79,7 @@ const HighChrt = () => {
                         23,
                         24,
                         25,
-                        23,
+                        33,
                         24,
                         22,
                         24,
@@ -88,13 +88,13 @@ const HighChrt = () => {
                         23,
                         22,
                         20,
-                        21,
-                        21,
-                        21,
-                        20,
+                        25,
+                        32,
+                        24,
+                        15,
                         22,
                         19,
-                        19,
+                        12,
                         20
                     ],
                     deviations: chartData?.metrics_SD?.["RR"]
@@ -181,7 +181,8 @@ const HighChrt = () => {
                                         chart.plotSizeY + chart.plotTop
                                     ])
                                     .attr({
-                                        "stroke-width": 3,
+                                        className: "customLine",
+                                        "stroke-width": 2.2,
                                         zIndex: 4,
                                         stroke: point.y >= alertThresholds.highRed ? "#F3857C" :
                                             point.y >= alertThresholds.highAmber ? "#FFB359" :
@@ -202,11 +203,11 @@ const HighChrt = () => {
                                         element.y >= alertThresholds.highAmber ? "#FFB359" :
                                             element.y <= alertThresholds.lowAmber ? "#FFB359" :
                                                 element.y <= alertThresholds.lowRed ? "#F3857C" :
-                                                    "#23BCD2",
+                                                    "#1499AD",
                                 className: "markerShadow",
                                 marker: {
                                     zIndex: 1000,
-                                    radius: 9
+                                    radius: 8
                                 }
                             })
                         })
@@ -214,25 +215,25 @@ const HighChrt = () => {
                 },
                 render: function () {
                     let chart = this;
-                    chart.renderer
-                    .button("+", 1300, 280, function() {
-                        setChartRange(chartRange+1)
-                    })
-                    .attr({
-                      zIndex: 3,
-                      className: "zoombutton",
-                    })
-                    .add();
+                    // chart.renderer
+                    // .button("+", 1300, 280, function() {
+                    //     setChartRange(chartRange+1)
+                    // })
+                    // .attr({
+                    //   zIndex: 3,
+                    //   className: "zoombutton",
+                    // })
+                    // .add();
 
-                    chart.renderer
-                    .button("-", 1250, 280, function() {
-                        setChartRange(chartRange-1)
-                    })
-                    .attr({
-                      className: "zoombutton",
-                      zIndex: 3
-                    })
-                    .add();
+                    // chart.renderer
+                    // .button("-", 1250, 280, function() {
+                    //     setChartRange(chartRange-1)
+                    // })
+                    // .attr({
+                    //   className: "zoombutton",
+                    //   zIndex: 3
+                    // })
+                    // .add();
 
 
                     setTimeout(() => {
@@ -249,7 +250,7 @@ const HighChrt = () => {
                                         chart.plotSizeY + chart.plotTop
                                     ]
                                 })?.attr({
-                                    "stroke-width": thresholdIndicator ? 4 : 0,
+                                    "stroke-width": thresholdIndicator ? 3 : 0,
                                 });
                             });
                         });
@@ -280,7 +281,7 @@ const HighChrt = () => {
         //     }
         // },
         xAxis: {
-            range: chartRange,
+            range: 10,
             type: 'datetime',
             gridLineWidth: 0,
             gridLineColor: "white",
@@ -310,8 +311,12 @@ const HighChrt = () => {
             tickInterval: 10,
             tickLength: 9,
             tickWidth: 1.5,
-            color: "#242637",
-            fontSize: "12px",
+            labels: {
+                style: {
+                    color: '#242637',
+                    fontSize: "12px",
+                }
+            },
             min: 0,
             max: 35,
             tickColor: '#164f57ba',
@@ -325,24 +330,52 @@ const HighChrt = () => {
             plotLines: [
                 {
                     color: baseline ? "#0A9954" : "transparent",
-                    dashStyle: 'dash',
+                    dashStyle: 'Dash',
                     visible: false,
                     // zIndex: 3,
                     value: baseLineValue,
                     width: 2.5
                 },
                 {
-                    color: baseLineLowerDeveiation && baselineDeviation ? "#8EA8CF" : "transparent",
+                    color: baseLineLowerDeveiation && baselineDeviation ? "#8ECFC0" : "transparent",
                     dashStyle: 'long',
                     // zIndex: 3,
                     value: baseLineValue - baselineDeviationValues,
                     width: 2.5
                 },
                 {
-                    color: baseLineUpperDeviation && baselineDeviation ? "#8EA8CF" : "transparent",
+                    color:  redThreshold ? "#FFD3D2" : "transparent",
+                    dashStyle: 'long',
+                    // zIndex: 3,
+                    value: alertThresholds.highRed,
+                    width: 2
+                },
+                {
+                    color: amberThreshold ? "#FFE8CF" : "transparent",
+                    dashStyle: 'long',
+                    // zIndex: 3,
+                    value: alertThresholds.highAmber,
+                    width: 2
+                },
+                {
+                    color: amberThreshold ? "#FFE8CF" : "transparent",
+                    dashStyle: 'long',
+                    // zIndex: 3,
+                    value: alertThresholds.lowAmber,
+                    width: 2
+                },
+                {
+                    color: redThreshold ? "#FFD3D2" : "transparent",
+                    dashStyle: 'long',
+                    // zIndex: 3,
+                    value: alertThresholds.lowRed,
+                    width: 2
+                },
+                {
+                    color: baseLineUpperDeviation && baselineDeviation ? "#8ECFC0" : "transparent",
                     dashStyle: 'long',
                     shadow: true,
-                    className: "plotlineshadow",
+                    // className: "plotlineshadow",
                     value: Number(baseLineValue) + Number(baselineDeviationValues),
                     // zIndex: 3,
                     width: 2.5
@@ -353,8 +386,9 @@ const HighChrt = () => {
             formatter() {
                 const pointData = graphDataWithDeviation.find(row => row.timestamp === this.point.x)
                 return Highcharts.dateFormat('%A, %d %b %Y %H:%M', pointData.timestamp) + '<br><br>' +
-                    '<b>Temprature: </b>' + pointData.value + '<br>' 
-                    // '<b>Deviation: </b>' + '<span>&#177;</span>' + pointData.deviation + '<br>'
+                    '<b>Temprature: </b>' + pointData.value + '<br>' + 
+                    '<b>Deviation: </b>' + 
+                    '<span>&#177;</span>' + pointData.deviation + '<br>'
             }
         },
         series: [{
@@ -363,7 +397,7 @@ const HighChrt = () => {
             type: 'areaspline',
             data: lineGraphData,
             zIndex: 20,
-            lineWidth: 3,
+            lineWidth: 3.2,
             fillColor: 'transparent',
             threshold: Number(baseLineValue) + Number(baselineDeviationValues),
             zones: [
@@ -373,7 +407,13 @@ const HighChrt = () => {
                 },
                 {
                     value: yAxisMax,
-                    fillColor: deviationIndicator ? "#BDDBFF" : "transparent",
+                    fillColor: deviationIndicator ? {
+                        linearGradient: [0, 0, 0, 200],
+                        stops: [
+                            [0, "#1E94E7"],
+                            [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                        ]
+                    } : "transparent",
                 }
             ]
         }, {
@@ -384,7 +424,14 @@ const HighChrt = () => {
             type: 'areasplinerange',
             lineWidth: 0,
             linkedTo: ':previous',
-            color: "#e3e2e275",
+            shadow: {
+                color: "black",
+                width: 20,
+                opacity: 0.003,
+                // offsetY: 10
+            },
+            opacity: 0.7,
+            color: "#E8E6E6",
             tooltip: {
                 enabled: false
             },

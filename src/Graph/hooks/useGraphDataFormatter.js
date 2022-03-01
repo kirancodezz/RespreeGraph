@@ -123,26 +123,26 @@ const useGraphDataFormatter = () => {
         if (alertsBands?.highRed > alertsBands?.highAmber) {
           
           alerts.push(
-            { className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
-            { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFE8CF", "#FFE8CF"], from: alertsBands.highRed, to: alertsBands.highAmber }
+            { className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
+            { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.highRed, to: alertsBands.highAmber }
           );
         } else {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highAmber },
-            { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFE8CF", "#FFE8CF"], from: alertsBands.highAmber, to: alertsBands.highRed, }
+            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMax, to: alertsBands?.highAmber },
+            { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.highAmber, to: alertsBands.highRed, }
           );
         }
       }
       if (alertsBands?.lowRed && alertsBands?.lowAmber) {
         if (alertsBands?.lowRed > alertsBands?.lowAmber) {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
-            {className: "", visibility: alertsBands.amberThreshold, stops: ["#FFE8CF", "#FFE8CF"], from: alertsBands.lowRed, to: alertsBands.lowAlerts,}
+            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
+            {className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.lowRed, to: alertsBands.lowAlerts,}
           );
         } else {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed,}, 
-            {className: "",visibility: alertsBands.amberThreshold, stops: ["#FFE8CF", "#FFE8CF"], from: alertsBands.lowAmber, to: alertsBands.lowRed,}
+            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed,}, 
+            {className: "",visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.lowAmber, to: alertsBands.lowRed,}
           );
         }
       }
@@ -163,6 +163,7 @@ const useGraphDataFormatter = () => {
         });
         return object;
       };
+
       return alertObjectCreator(alerts);
     },
     []
