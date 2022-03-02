@@ -35,10 +35,10 @@ const HighChrt = () => {
     
     // TODO: If no value set the value as undefined
     const alertThresholds = {
-        highRed: "38",
+        highRed: "36",
         highAmber: "30",
         lowAmber: "10",
-        lowRed: "2",
+        lowRed: "4",
         yAxisMax: yAxisMax,
         yAxisMin: yAxisMin,
         amberThreshold: amberThreshold,
@@ -76,28 +76,28 @@ const HighChrt = () => {
                         24,
                         24,
                         25,
-                        25,
+                        38,
                         25,
                         24,
-                        23,
+                        2,
                         24,
                         25,
                         33,
                         24,
                         22,
-                        24,
+                        4,
                         24,
                         23,
-                        23,
+                        39,
                         22,
-                        20,
+                        12,
                         25,
-                        32,
+                        37,
                         24,
                         15,
                         22,
                         19,
-                        12,
+                        6,
                         20
                     ],
                     deviations: chartData?.metrics_SD?.["RR"]
@@ -145,7 +145,7 @@ const HighChrt = () => {
         // setDateRange(minimumDateShown)
     }, [deviationFromBaseline, baseLineValue])
     useEffect(() => {
-        setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 5])
+        setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 10])
         // setDateRange(formattedTimestamp?.[dateRangeIndex])
     },[formattedTimestamp, dateRange])
     const options = {
@@ -188,8 +188,8 @@ const HighChrt = () => {
                                         zIndex: 4,
                                         stroke: point.y >= alertThresholds.highRed ? "#F3857C" :
                                                     point.y >= alertThresholds.highAmber ? "#FFB359" :
-                                                        point.y <= alertThresholds.lowAmber ? "#FFB359" :
-                                                            point.y <= alertThresholds.lowRed ? "#F3857C" :
+                                                        point.y <= alertThresholds.lowRed ? "#F3857C" :
+                                                            point.y <= alertThresholds.lowAmber ? "#FFB359" :
                                                                 "transparent",
                                         display: false
                                     })
@@ -203,14 +203,15 @@ const HighChrt = () => {
                                 color:
                                     element.y >= alertThresholds.highRed ? "#F3857C" :
                                         element.y >= alertThresholds.highAmber ? "#FFB359" :
-                                            element.y <= alertThresholds.lowAmber ? "#FFB359" :
-                                                element.y <= alertThresholds.lowRed ? "#F3857C" :
+                                            element.y <= alertThresholds.lowRed ? "#F3857C" :
+                                                element.y <= alertThresholds.lowAmber ? "#FFB359" :
                                                     "#1499AD",
                                 className: "markerShadow",
                                 marker: {
                                     radius: 8
                                 }
                             })
+                            console.log(alertThresholds.lowRed)
                         })
                     }, 900)
                 },
@@ -219,6 +220,7 @@ const HighChrt = () => {
                     // chart.renderer
                     // .button("+", 1250, 210, function() {
                     //     setDateRangeIndex(dateRangeIndex + 5 )
+
                     // })
                     // .attr({
                     //   zIndex: 4,
@@ -269,6 +271,9 @@ const HighChrt = () => {
             enabled: false
         },
         plotOptions: {
+            series: {
+                stickyTracking: false
+            },
             animation: true,
             line: {
                 dataLables: {
@@ -401,21 +406,32 @@ const HighChrt = () => {
             zIndex: 20,
             lineWidth: 3.2,
             fillColor: 'transparent',
-            threshold: Number(baseLineValue) + Number(baselineDeviationValues),
+            threshold: Number(baseLineValue) - Number(baselineDeviationValues),
             zones: [
                 {
+                    value: 40,
+                    fillColor: 'transparent'
+                }, {
                     value: Number(baseLineValue) + Number(baselineDeviationValues),
-                    fillColor: 'transparent',
-                },
-                {
-                    value: yAxisMax,
                     fillColor: deviationIndicator ? {
-                        linearGradient: [0, 0, 0, 200],
-                        stops: [
-                            [0, "#1E94E7"],
-                            [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
-                        ]
-                    } : "transparent",
+                                linearGradient: [0, 0, 0, 200],
+                                stops: [
+                                    [0, "#1E94E7"],
+                                    [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                ]
+                            } : "transparent",
+                }, {
+                    value: Number(baseLineValue) - Number(baselineDeviationValues),
+                    fillColor: 'transparent'
+                }, {
+                    value: yAxisMin,
+                    fillColor: deviationIndicator ? {
+                                linearGradient: [0, 0, 0, 200],
+                                stops: [
+                                    [0, "#1E94E7"],
+                                    [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                                ]
+                            } : "transparent",
                 }
             ]
         }, {

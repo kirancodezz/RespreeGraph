@@ -117,13 +117,12 @@ const Graph = ({
                     </div>
                     <div className="container"> 
                     <div className="checkbox">
-                        <input type="checkbox" id="lower" name="" value=""  onClick={() => {setBaseLineLowerDeveiation(!baseLineLowerDeveiation)}}  defaultChecked={baseLineLowerDeveiation ? true : false} />
-                        <label htmlFor="lower"><span>Lower</span></label>
-                    </div>
-
-                    <div className="checkbox">
                         <input type="checkbox" id="higher" name="" value="" onClick={() => {setBaseLineUpperDeviation(!baseLineUpperDeviation)}}  defaultChecked={baseLineUpperDeviation ? true : false} />
                         <label htmlFor="higher"><span>Higher</span></label>
+                    </div>
+                    <div className="checkbox">
+                        <input type="checkbox" id="lower" name="" value=""  onClick={() => {setBaseLineLowerDeveiation(!baseLineLowerDeveiation)}}  defaultChecked={baseLineLowerDeveiation ? true : false} />
+                        <label htmlFor="lower"><span>Lower</span></label>
                     </div>
                     </div>
                 </div>
