@@ -427,7 +427,6 @@ const HighChrt = () => {
                     value: yAxisMin,
                     fillColor: deviationIndicator ? {
                                 linearGradient: [0, 0, 0, 200],
-                                linearGradient: [0, 0, 0, 200],
                                 stops: [
                                     [0, "#1E94E7"],
                                     [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
