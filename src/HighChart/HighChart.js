@@ -14,6 +14,8 @@ const HighChrt = () => {
     const [chartData, setChartData] = useState({})
     // const [chartRange, setChartRange] = useState(10)
     const [baseLineValue, setBaselineValue] = useState(0);
+    const [dateRange, setDateRange] = useState();
+    // const [dateRangeIndex, setDateRangeIndex] = useState(5);
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
     const [isCalculatedValueShown, setIsCalculatedValueShown] = useState(true)
@@ -30,6 +32,7 @@ const HighChrt = () => {
     })
     const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter()
+    
     // TODO: If no value set the value as undefined
     const alertThresholds = {
         highRed: "30",
@@ -45,7 +48,6 @@ const HighChrt = () => {
     const onGraphCheckboxClicked = (checkbox, boolean) => {
         setGraphComponentCheckbox({ ...graphComponentsCheckbox, [checkbox]: boolean })
     }
-
     HC_more(Highcharts);
     useEffect(() => {
         fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-01-22T05:32:33&stop_datetime=2022-02-21T05:32:33&id=4&resolution=daily")
@@ -57,7 +59,7 @@ const HighChrt = () => {
                 }
             )
     }, [formatGraphData])
-
+  
     const graphContainers = useMemo(() => {
         return [
             {
@@ -114,6 +116,7 @@ const HighChrt = () => {
     const lineChartValuesOnly = graphContainers[0].data.lineChartValuesOnly;
     const medianValue = graphContainers[0].data.median
     const deviationGraph = graphContainers[0].data?.deviationGraph
+    const formattedTimestamp = graphContainers[0].data?.formattedTimestamp
     const heartRateData = graphData.heartrateValues;
     // Find Standard deviation
     const standardDeviationCalulator = (arr) => {
@@ -126,7 +129,7 @@ const HighChrt = () => {
         let sum = arr.reduce((acc, curr) => acc + curr, 0);
         return Math.sqrt(sum / arr.length)
     }
-
+  
     const deviationData = lineGraphData?.map((value) => {
         return [value[0], value[1] + standardDeviationCalulator(lineChartValuesOnly), value[1] - standardDeviationCalulator(lineChartValuesOnly)]
     })
@@ -138,8 +141,12 @@ const HighChrt = () => {
 
     useEffect(() => {
         setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline)
+        // setDateRange(minimumDateShown)
     }, [deviationFromBaseline, baseLineValue])
-
+    useEffect(() => {
+        setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 5])
+        // setDateRange(formattedTimestamp?.[dateRangeIndex])
+    },[formattedTimestamp, dateRange])
     const options = {
         chart: {
             title: "",
@@ -153,6 +160,7 @@ const HighChrt = () => {
               },
             // 
             // zoomType: 'x',
+            // height: "300px",
             animation: true,
             // scrollablePlotArea: {
             //     minWidth: 500,
@@ -206,7 +214,6 @@ const HighChrt = () => {
                                                     "#1499AD",
                                 className: "markerShadow",
                                 marker: {
-                                    zIndex: 1000,
                                     radius: 8
                                 }
                             })
@@ -217,21 +224,25 @@ const HighChrt = () => {
                     let chart = this;
                     // chart.renderer
                     // .button("+", 1300, 280, function() {
-                    //     setChartRange(chartRange+1)
+                    //     setDateRangeIndex(dateRangeIndex + 5 )
+                    //     console.log(dateRangeIndex)
+                    //     console.log(dateRange)
                     // })
                     // .attr({
-                    //   zIndex: 3,
+                    //   zIndex: 4,
                     //   className: "zoombutton",
                     // })
                     // .add();
 
                     // chart.renderer
                     // .button("-", 1250, 280, function() {
-                    //     setChartRange(chartRange-1)
+                    //     setDateRangeIndex(dateRangeIndex - 5 )  
+                    //     console.log(dateRangeIndex)
+                    //     console.log(dateRange)
                     // })
                     // .attr({
                     //   className: "zoombutton",
-                    //   zIndex: 3
+                    //   zIndex: 4
                     // })
                     // .add();
 
@@ -281,7 +292,8 @@ const HighChrt = () => {
         //     }
         // },
         xAxis: {
-            range: 10,
+            // range: 1,
+            min: dateRange,
             type: 'datetime',
             gridLineWidth: 0,
             gridLineColor: "white",

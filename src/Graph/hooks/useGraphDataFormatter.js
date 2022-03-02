@@ -62,6 +62,7 @@ const useGraphDataFormatter = () => {
         }
       });
       const median = medianCalculator(lineChartValuesOnly);
+      const minimumDateShown = formattedTimestamp[formattedTimestamp.length - 4]
       return {
         formattedVitals,
         lineChartValues,
@@ -69,6 +70,7 @@ const useGraphDataFormatter = () => {
         median,
         deviationGraph,
         formattedTimestamp,
+        minimumDateShown
       };
     },
     [medianCalculator]
