@@ -15,7 +15,7 @@ const HighChrt = () => {
     // const [chartRange, setChartRange] = useState(10)
     const [baseLineValue, setBaselineValue] = useState(0);
     const [dateRange, setDateRange] = useState();
-    const [dateRangeIndex, setDateRangeIndex] = useState(5);
+    // const [dateRangeIndex, setDateRangeIndex] = useState(5);
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
     const [isCalculatedValueShown, setIsCalculatedValueShown] = useState(true)
@@ -145,9 +145,9 @@ const HighChrt = () => {
         // setDateRange(minimumDateShown)
     }, [deviationFromBaseline, baseLineValue])
     useEffect(() => {
-        setDateRange(formattedTimestamp?.[formattedTimestamp?.length - dateRangeIndex])
+        setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 5])
         // setDateRange(formattedTimestamp?.[dateRangeIndex])
-    },[formattedTimestamp, dateRange, dateRangeIndex])
+    },[formattedTimestamp, dateRange])
     const options = {
         chart: {
             title: "",
@@ -216,25 +216,25 @@ const HighChrt = () => {
                 },
                 render: function () {
                     let chart = this;
-                    chart.renderer
-                    .button("+", 1250, 210, function() {
-                        setDateRangeIndex(dateRangeIndex + 5 )
-                    })
-                    .attr({
-                      zIndex: 4,
-                      className: "zoombutton",
-                    })
-                    .add();
+                    // chart.renderer
+                    // .button("+", 1250, 210, function() {
+                    //     setDateRangeIndex(dateRangeIndex + 5 )
+                    // })
+                    // .attr({
+                    //   zIndex: 4,
+                    //   className: "zoombutton",
+                    // })
+                    // .add();
 
-                    chart.renderer
-                    .button("-", 1300, 210, function() {
-                        setDateRangeIndex(dateRangeIndex - 5 )  
-                    })
-                    .attr({
-                      className: "zoombutton",
-                      zIndex: 4
-                    })
-                    .add();
+                    // chart.renderer
+                    // .button("-", 1300, 210, function() {
+                    //     setDateRangeIndex(dateRangeIndex - 5 )  
+                    // })
+                    // .attr({
+                    //   className: "zoombutton",
+                    //   zIndex: 4
+                    // })
+                    // .add();
 
 
                     setTimeout(() => {
