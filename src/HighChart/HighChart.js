@@ -35,16 +35,17 @@ const HighChrt = () => {
     
     // TODO: If no value set the value as undefined
     const alertThresholds = {
-        highRed: "30",
-        highAmber: "25",
-        lowAmber: "15",
-        lowRed: "10",
+        highRed: "35",
+        highAmber: "30",
+        lowAmber: "10",
+        lowRed: "5",
         yAxisMax: yAxisMax,
         yAxisMin: yAxisMin,
         amberThreshold: amberThreshold,
         redThreshold: redThreshold
     }
     const alertBands = calculateGraphAlertBands((alertThresholds))
+    console.log(alertBands)
     const onGraphCheckboxClicked = (checkbox, boolean) => {
         setGraphComponentCheckbox({ ...graphComponentsCheckbox, [checkbox]: boolean })
     }
@@ -151,21 +152,13 @@ const HighChrt = () => {
         chart: {
             title: "",
             type: 'spline',
-            // new
             panning: true,
             zoomType: false,
             pinchType: false,
             scrollablePlotArea: {
                 scrollPositionX: 1
               },
-            // 
-            // zoomType: 'x',
-            // height: "300px",
             animation: true,
-            // scrollablePlotArea: {
-            //     minWidth: 500,
-            //     scrollPositionX: 1
-            // },
             events: {
                 redraw: function () {
                     const chart = this;
@@ -189,14 +182,14 @@ const HighChrt = () => {
                                         chart.plotSizeY + chart.plotTop
                                     ])
                                     .attr({
-                                        className: "customLine",
+                                        class: "customLine",
                                         "stroke-width": 2.2,
                                         zIndex: 4,
                                         stroke: point.y >= alertThresholds.highRed ? "#F3857C" :
-                                            point.y >= alertThresholds.highAmber ? "#FFB359" :
-                                                point.y <= alertThresholds.lowAmber ? "#FFB359" :
-                                                    point.y <= alertThresholds.lowRed ? "#F3857C" :
-                                                        "transparent",
+                                                    point.y >= alertThresholds.highAmber ? "#FFB359" :
+                                                        point.y <= alertThresholds.lowAmber ? "#FFB359" :
+                                                            point.y <= alertThresholds.lowRed ? "#F3857C" :
+                                                                "transparent",
                                         display: false
                                     })
                                     .add()

@@ -139,7 +139,7 @@ const useGraphDataFormatter = () => {
         if (alertsBands?.lowRed > alertsBands?.lowAmber) {
           alerts.push(
             {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
-            {className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.lowRed, to: alertsBands.lowAlerts,}
+            {className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.lowRed, to: alertsBands.lowAmber,}
           );
         } else {
           alerts.push(
