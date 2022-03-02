@@ -68,8 +68,8 @@
 .checkbox label:after {
   content: '';
     display: block;
-    width: 10px;
-    height: 5px;
+    width: 9px;
+    height: 3px;
     border-bottom: 3px solid #616FBC;
     border-left: 3px solid #616FBC;
     -webkit-transform: rotate(-45deg) scale(0);
@@ -77,7 +77,7 @@
     transition: transform ease 0.25s;
     will-change: transform;
     position: absolute;
-    top: 9px;
+    top: 10px;
     left: 9px;
 }
 .checkbox input[type="checkbox"]:checked ~ label::before {
