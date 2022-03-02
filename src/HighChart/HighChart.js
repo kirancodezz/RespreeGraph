@@ -208,7 +208,7 @@ const HighChrt = () => {
                                                     "#1499AD",
                                 className: "markerShadow",
                                 marker: {
-                                    radius: 8
+                                    radius: 9
                                 }
                             })
                             console.log(alertThresholds.lowRed)
@@ -414,7 +414,7 @@ const HighChrt = () => {
                 }, {
                     value: Number(baseLineValue) + Number(baselineDeviationValues),
                     fillColor: deviationIndicator ? {
-                                linearGradient: [0, 0, 0, 200],
+                                linearGradient: [0, 0, 0, 230],
                                 stops: [
                                     [0, "#1E94E7"],
                                     [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
@@ -426,6 +426,7 @@ const HighChrt = () => {
                 }, {
                     value: yAxisMin,
                     fillColor: deviationIndicator ? {
+                                linearGradient: [0, 0, 0, 200],
                                 linearGradient: [0, 0, 0, 200],
                                 stops: [
                                     [0, "#1E94E7"],
