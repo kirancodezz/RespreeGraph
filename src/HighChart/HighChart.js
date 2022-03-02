@@ -159,6 +159,7 @@ const HighChrt = () => {
                 scrollPositionX: 1
               },
             animation: true,
+            height: "340",
             events: {
                 redraw: function () {
                     const chart = this;

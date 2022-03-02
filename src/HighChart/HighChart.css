@@ -7,7 +7,7 @@
 .graphControlsContainer {
     width: 100%;
     display: flex;
-    margin: 30px;
+    margin: 30px 30px 50px;
     position: relative;
     font-family: 'Manrope', sans-serif;
 }
