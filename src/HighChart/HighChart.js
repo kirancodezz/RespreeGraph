@@ -208,7 +208,7 @@ const HighChrt = () => {
                                                     "#1499AD",
                                 className: "markerShadow",
                                 marker: {
-                                    radius: 9.5
+                                    radius: 8.6
                                 }
                             })
                             console.log(alertThresholds.lowRed)
