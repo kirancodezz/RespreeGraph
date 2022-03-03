@@ -159,7 +159,7 @@ const HighChrt = () => {
                 scrollPositionX: 1
               },
             animation: true,
-            height: "340",
+            height: "280",
             events: {
                 redraw: function () {
                     const chart = this;
@@ -406,7 +406,7 @@ const HighChrt = () => {
             zIndex: 20,
             lineWidth: 3.2,
             fillColor: 'transparent',
-            threshold: Number(baseLineValue) - Number(baselineDeviationValues),
+            threshold: baseLineValue,
             zones: [
                 {
                     value: 40,
@@ -420,13 +420,15 @@ const HighChrt = () => {
                                     [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
                                 ]
                             } : "transparent",
-                }, {
-                    value: Number(baseLineValue) - Number(baselineDeviationValues),
-                    fillColor: 'transparent'
-                }, {
+                },
+                //  {
+                //     value: Number(baseLineValue) - Number(baselineDeviationValues),
+                //     fillColor: 'transparent'
+                // } 
+                {
                     value: yAxisMin,
                     fillColor: deviationIndicator ? {
-                                linearGradient: [0, 0, 0, 200],
+                                linearGradient: [0, 0, 0, 230],
                                 stops: [
                                     [0, "#1E94E7"],
                                     [1,  Highcharts.color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
