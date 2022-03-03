@@ -76,7 +76,7 @@ const Graph = ({
             </div>
             <div className="graphControlsContainer">
                 <div className="controlsElements">
-                    <h3>Respiratory Rate</h3>
+                    <h3>Temperature</h3>
                     <div className="elementsValues">
                         <p className="label">Latest</p><p className="labelValue">150.80</p>
                         <p className="minusPlusValue"><span>&#177;</span>10</p>

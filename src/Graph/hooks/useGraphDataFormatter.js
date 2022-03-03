@@ -125,26 +125,26 @@ const useGraphDataFormatter = () => {
         if (alertsBands?.highRed > alertsBands?.highAmber) {
           
           alerts.push(
-            { className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
-            { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.highRed, to: alertsBands.highAmber }
+            { className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
+            { className: "", visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.highRed, to: alertsBands.highAmber }
           );
         } else {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMax, to: alertsBands?.highAmber },
-            { className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.highAmber, to: alertsBands.highRed, }
+            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highAmber },
+            { className: "", visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.highAmber, to: alertsBands.highRed, }
           );
         }
       }
       if (alertsBands?.lowRed && alertsBands?.lowAmber) {
         if (alertsBands?.lowRed > alertsBands?.lowAmber) {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
-            {className: "", visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.lowRed, to: alertsBands.lowAmber,}
+            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
+            {className: "", visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.lowRed, to: alertsBands.lowAmber,}
           );
         } else {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#FFE3E2", "#FFE3E2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed,}, 
-            {className: "",visibility: alertsBands.amberThreshold, stops: ["#FFEDD9", "#FFEDD9"], from: alertsBands.lowAmber, to: alertsBands.lowRed,}
+            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed,}, 
+            {className: "",visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.lowAmber, to: alertsBands.lowRed,}
           );
         }
       }
