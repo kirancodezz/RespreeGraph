@@ -26,11 +26,9 @@
     padding: 0 20px;
     border-radius: 4px;
     background-color: #EEF3FF;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.16);
 }
 .elementsValues{
     display: flex;
-    margin-left: 50px;
 }
 .elementsValues .label {
     font-weight: 600;
@@ -53,16 +51,18 @@
     color: #6E7D80;
 }
 .headerLabel{ 
+    margin: auto;
     font-size: 12px;
     font-weight: 500;
+    padding: 0px 21px;
     color: #2E2E49;
     text-transform: capitalize;
 }
 .baseLineValue{
     background-color: #DDE6FF;
     border: 0;
-    width: 60px;
-    height: 36px;
+    width: 76px;
+    height: 41px;
     font-weight: 800;
     color: #0A9954;
     text-align: center;
@@ -70,10 +70,14 @@
     margin: auto 20px ;
 }
 .bottomMargin{
-    margin-bottom: 8px;
+    margin-right: 10px;
 }
 .typeSelector {
     margin: auto;
+    display: inline-flex; 
+}
+.typeSelector span {
+    margin-top: 8px;
 }
 .typeSelector input{
     font-size: 10px;

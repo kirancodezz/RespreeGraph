@@ -74,18 +74,22 @@ const Graph = ({
                     </li>
                 </ul>
             </div>
-            <div className="graphControlsContainer">
-                <div className="controlsElements">
-                    <h3>Temperature</h3>
+            <div className="graphControllerWrapper">
+                <div className="controls">
+                    <p className="graphName">Temperature</p>
+                </div>
+                <div className="latestReading">
                     <div className="elementsValues">
-                        <p className="label">Latest</p><p className="labelValue">150.80</p>
-                        <p className="minusPlusValue"><span>&#177;</span>10</p>
+                        <p className="label">Latest</p>
+                        <div className="vitalValue">
+                            <p className="labelValue">150.80</p>
+                            <p className="minusPlusValue"><span>&#177;</span>10</p>
+                        </div>
                     </div>
                 </div>
-
-                <div className="rightControls">
-                    <div className="controlsElements baslineControl">
-                        <p className="headerLabel">Baseline <br/> value</p>
+                <div className="baselineReading">
+                 <div className="controlsElements baslineControl">
+                        <p className="headerLabel">Baseline value</p>
                         <div className="baselineValueContainer">
                         <input 
                             type="number" 
@@ -106,26 +110,28 @@ const Graph = ({
                         </label>
                         </div>
                     </div>
-                    <div className="controlsElements">
-                    <p className="deviationHeader">Deviation<br></br><span>(From Baseline)</span></p>
-                    <div className="DeviationChanger">
-                        <div className="deviationControls">
-                            <button className="leftButton" onClick={() => {setDeviationFromBaseline(deviationFromBaseline-1)}}> <img alt="controls" src={require('../assets/right.png')} /><span>&#177;</span></button>
-                            <input type="text" value={`${deviationFromBaseline}%`} onChange={() => {}}/>
-                            <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline+1)}} > <img alt="controls" src={require('../assets/play.png')} /> </button>
+                </div>
+                <div className="deviationReading">
+                    <div className="controlsElements deviationControlElements">
+                        <p className="deviationHeader">Deviation<br></br><span>(From Baseline)</span></p>
+                        <div className="DeviationChanger">
+                            <div className="deviationControls">
+                                <button className="leftButton" onClick={() => {setDeviationFromBaseline(deviationFromBaseline-1)}}> <img alt="controls" src={require('../assets/right.png')} /><span>&#177;</span></button>
+                                <input type="text" value={`${deviationFromBaseline}%`} onChange={() => {}}/>
+                                <button onClick={() => {setDeviationFromBaseline(deviationFromBaseline+1)}} > <img alt="controls" src={require('../assets/play.png')} /> </button>
+                            </div>
+                        </div>
+                        <div className="container"> 
+                        <div className="checkbox checkboxFirst">
+                            <input type="checkbox" id="higher" name="" value="" onClick={() => {setBaseLineUpperDeviation(!baseLineUpperDeviation)}}  defaultChecked={baseLineUpperDeviation ? true : false} />
+                            <label htmlFor="higher"><span>Higher</span></label>
+                        </div>
+                        <div className="checkbox">
+                            <input type="checkbox" id="lower" name="" value=""  onClick={() => {setBaseLineLowerDeveiation(!baseLineLowerDeveiation)}}  defaultChecked={baseLineLowerDeveiation ? true : false} />
+                            <label htmlFor="lower"><span>Lower</span></label>
+                        </div>
                         </div>
                     </div>
-                    <div className="container"> 
-                    <div className="checkbox">
-                        <input type="checkbox" id="higher" name="" value="" onClick={() => {setBaseLineUpperDeviation(!baseLineUpperDeviation)}}  defaultChecked={baseLineUpperDeviation ? true : false} />
-                        <label htmlFor="higher"><span>Higher</span></label>
-                    </div>
-                    <div className="checkbox">
-                        <input type="checkbox" id="lower" name="" value=""  onClick={() => {setBaseLineLowerDeveiation(!baseLineLowerDeveiation)}}  defaultChecked={baseLineLowerDeveiation ? true : false} />
-                        <label htmlFor="lower"><span>Lower</span></label>
-                    </div>
-                    </div>
-                </div>
                 </div>
             </div>
                 <HighchartsReact highcharts={Highcharts} options={options}  onLoad = {() => {
