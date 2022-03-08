@@ -1,0 +1,44 @@
+.graphControllerWrapper {
+    font-family: Manrope;
+    background: #EEF3FF;
+    width: 98%;
+    display: flex;
+    margin: auto 19px 12px;
+    .graphName {
+        font-family: Manrope;
+        font-style: normal;
+        font-weight: 800;
+        font-size: 16px;
+        color: #2E2E49;        
+        margin: 10px 56px;
+    }
+    .latestReading {
+        padding: 10px 50px;
+        display: flex;
+        background: #E3EAFF;
+    }
+    .vitalValue{
+        display: flex;
+        background: #F6F8FF;
+        padding: 1px 6px;
+        border-radius: 4px;
+    }
+    .deviationControlElements {
+        background-color: #E3EAFF;
+    }
+    .deviationReading {
+        width: 100%;
+        background-color: #E3EAFF;
+        .deviationHeader{
+            margin: auto;
+        }
+        .container {
+            display: flex;
+            margin: auto 5px;
+            .checkboxFirst {
+                margin-right: 10px;
+                margin-left: 10px;
+            }
+        }
+    }
+}
