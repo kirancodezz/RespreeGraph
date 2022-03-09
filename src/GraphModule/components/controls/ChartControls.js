@@ -18,7 +18,7 @@ const ChartControls = ({
     const [ isMenuCollapsed, setIsMenuCollapsed ] = useState(true)
     return (
         <>
-            <div className="graphControllerWrapper" style={{display: isMenuCollapsed ? "inline-flex" : "flex"}}>
+            <div className="graphControllerWrapper" style={{display: isMenuCollapsed ? "inline-flex" : "flex"}} key={index}>
                 <div className="controls">
                     <p className="graphName">{name}</p>
                 </div>
@@ -46,13 +46,13 @@ const ChartControls = ({
                             />
                         </div>
                         <div className="typeSelector">
-                            <label className="selectType bottomMargin" onClick={() => { setIsCalculatedValueShown(false) }} ><p>Manual</p>
-                                <input type="radio" name="radio" defaultChecked={isCalculatedValueShown === false ? true : false} />
-                                <span className="checkmark"></span>
+                            <label className="selectType bottomMargin" onClick={() => { setIsCalculatedValueShown(false) }} key={index} ><p>Manual</p>
+                                <input type="radio" name={index} defaultChecked={isCalculatedValueShown === false ? true : false} key={index} />
+                                <span className="checkmark" key={index} ></span>
                             </label>
-                            <label className="selectType" onClick={() => { setIsCalculatedValueShown(true) }}  ><p>Calculated</p>
-                                <input type="radio" name="radio" defaultChecked={isCalculatedValueShown === true ? true : false} />
-                                <span className="checkmark"></span>
+                            <label className="selectType" onClick={() => { setIsCalculatedValueShown(true) }}  key={index} ><p>Calculated</p>
+                                <input type="radio" name={index} defaultChecked={isCalculatedValueShown === true ? true : false} key={index} />
+                                <span className="checkmark" key={index} ></span>
                             </label>
                         </div>
                     </div>

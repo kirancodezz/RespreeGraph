@@ -17,7 +17,7 @@ const GraphModule = () => {
     })
     const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     useEffect(() => {
-        fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-01-22T05:32:33&stop_datetime=2022-02-21T05:32:33&id=4&resolution=daily")
+        fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-02-07T12:14:36&stop_datetime=2022-03-09T12:14:36&id=4&resolution=daily")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -28,33 +28,64 @@ const GraphModule = () => {
 
     const graphData = [
         {
-            name: 'Temperature',
+            name: 'Respiratory Rate ',
             data: {
                 timestamps: chartData?.metrics?.listdate,
-                // vitals: chartData?.metrics?.["HR"],
-                vitals: [ 11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 20 ],
-                deviations: chartData?.metrics_SD?.["HR"]
+                vitals: chartData?.metrics?.["RR"] || [],
+                deviations: chartData?.metrics_SD?.["RR"] || []
             },
-            alertThresholds : {
-                highRed: 36,
-                highAmber: 30,
-                lowAmber: 10,
-                lowRed: 4,
-            }
+            bandThreshHoldValues : {
+                highRedValue: 30,
+                highAmberValue: 25,
+                lowAmberValue: 10,
+                lowRedValue: 8,
+            },
+            latestValue: 100.33
+        },
+        {
+            name: 'Respiratory Tidal Depth',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["RR_TD"] || [],
+                deviations: chartData?.metrics_SD?.["RR_TD"] || []
+            },
+            bandThreshHoldValues : {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 100.33
+        },
+        {
+            name: 'Heart Rate',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["HR"] || [],
+                deviations: chartData?.metrics_SD?.["HR"] || []
+            },
+            bandThreshHoldValues : {
+                highRedValue: 100,
+                highAmberValue: 90,
+                lowAmberValue: 80,
+                lowRedValue: 70,
+            },
+            latestValue: 100.33
         },
         // {
-        //     name: 'Respiratory Rate',
+        //     name: 'SpO2',
         //     data: {
         //         timestamps: chartData?.metrics?.listdate,
-        //         vitals: chartData?.metrics?.["HR"],
-        //         deviations: chartData?.metrics_SD?.["HR"]
+        //         vitals: chartData?.metrics?.["SpO2"] || [],
+        //         deviations: chartData?.metrics_SD?.["SpO2"] || []
         //     },
-        //     alertThresholds : {
-        //         highRed: 36,
-        //         highAmber: 30,
-        //         lowAmber: 10,
-        //         lowRed: 4,
-        //     }
+        //     bandThreshHoldValues : {
+        //         highRedValue: 90,
+        //         highAmberValue: null,
+        //         lowAmberValue: 94,
+        //         lowRedValue: 91,
+        //     },
+        //     latestValue: 100.33
         // }
     ];
     return (
