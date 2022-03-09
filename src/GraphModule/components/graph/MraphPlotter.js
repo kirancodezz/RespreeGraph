@@ -20,14 +20,11 @@ const GraphPlotter = ({
   amberThreshold,
   redThreshold,
   standardDeviation,
-  bandThreshHoldValues,
 }) => {
   HC_more(Highcharts);
   const [yAxisMax, setYAxisMax] = useState(0);
   const [yAxisMin, setYAxisMin] = useState(0);
   const [dateRange, setDateRange] = useState();
-  const [min, setMin] = useState(null);
-  const [max, setMax] = useState(null);
   const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
   const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter();
   const chartData = formatGraphData(data.data);
@@ -52,20 +49,21 @@ const GraphPlotter = ({
   const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
   const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
 
-  useEffect(() => {
-    const vitals = data?.data?.vitals;
-    const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
-    const topVitalValue = Math.max(...vitals);
-    const topMaxValue = Math.max(...[topThresholdMaximumValue, topVitalValue]);
+  
+//   useEffect(() => {
+//     const vitals = data?.data?.vitals;
+//     const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
+//     const topVitalValue = Math.max(...vitals);
+//     const topMaxValue = Math.max(...[topThresholdMaximumValue, topVitalValue]);
 
-    const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
-    const bottomVitalValue = Math.min(...vitals);
-    const bottomMaxValue = Math.max(
-      ...[bottomThresholdMaximumValue, bottomVitalValue]
-    );
-    setMax(topMaxValue + 5);
-    setMin(bottomMaxValue - 5);
-  }, [lowAmber, lowRed, min, max, highAmber, highRed, yAxisMax, data]);
+//     const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
+//     const bottomVitalValue = Math.min(...vitals);
+//     const bottomMaxValue = Math.max(
+//       ...[bottomThresholdMaximumValue, bottomVitalValue]
+//     );
+//     setMax(topMaxValue + 5);
+//     setMin(bottomMaxValue - 5);
+//   }, [lowAmber, lowRed, min, max, highAmber, highRed, yAxisMax, data]);
 
   useEffect(() => {
     setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
@@ -254,14 +252,8 @@ const GraphPlotter = ({
           fontSize: "12px",
         },
       },
-      min:
-        bottomThresholdMaximumValue < yAxisMin
-          ? yAxisMax - 3
-          : bottomThresholdMaximumValue - 2,
-      max:
-        topThresholdMaximumValue > yAxisMax
-          ? yAxisMax + 3
-          : topThresholdMaximumValue + 2,
+      min: bottomThresholdMaximumValue ? bottomThresholdMaximumValue < yAxisMin ? yAxisMax - 3 : bottomThresholdMaximumValue - 2 : null,
+      max: topThresholdMaximumValue ? topThresholdMaximumValue > yAxisMax ? yAxisMax + 3 : topThresholdMaximumValue + 2 : null,
       tickColor: "#164f57ba",
       title: {
         text: null,

@@ -13,7 +13,7 @@ const GraphComponent = ({
     redThreshold,
     standardDeviation
 }) => {
-    const [baseLineValue, setBaselineValue] = useState(0);
+    const [baseLineValue, setBaselineValue] = useState();
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [isCalculatedValueShown, setIsCalculatedValueShown] = useState(true)
     const [baseLineLowerDeviation, setBaseLineLowerDeviation] = useState(true)

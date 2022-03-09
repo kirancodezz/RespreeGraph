@@ -31,7 +31,7 @@ const GraphModule = () => {
             name: 'Respiratory Rate ',
             data: {
                 timestamps: chartData?.metrics?.listdate,
-                vitals: chartData?.metrics?.["RR"] || [],
+                vitals: [ 11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 20 ],
                 deviations: chartData?.metrics_SD?.["RR"] || []
             },
             bandThreshHoldValues : {
@@ -58,6 +58,21 @@ const GraphModule = () => {
             latestValue: 100.33
         },
         {
+            name: 'Respiratory Tidal Depth',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["RR_DC"] || [],
+                deviations: chartData?.metrics_SD?.["RR_DC"] || []
+            },
+            bandThreshHoldValues : {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 100.33
+        },
+        {
             name: 'Heart Rate',
             data: {
                 timestamps: chartData?.metrics?.listdate,
@@ -72,21 +87,21 @@ const GraphModule = () => {
             },
             latestValue: 100.33
         },
-        // {
-        //     name: 'SpO2',
-        //     data: {
-        //         timestamps: chartData?.metrics?.listdate,
-        //         vitals: chartData?.metrics?.["SpO2"] || [],
-        //         deviations: chartData?.metrics_SD?.["SpO2"] || []
-        //     },
-        //     bandThreshHoldValues : {
-        //         highRedValue: 90,
-        //         highAmberValue: null,
-        //         lowAmberValue: 94,
-        //         lowRedValue: 91,
-        //     },
-        //     latestValue: 100.33
-        // }
+        {
+            name: 'SpO2',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["SpO2"] || [],
+                deviations: chartData?.metrics_SD?.["SpO2"] || []
+            },
+            bandThreshHoldValues : {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: 94,
+                lowRedValue: 91,
+            },
+            latestValue: 100.33
+        }
     ];
     return (
         <div className="graphsContainer">
