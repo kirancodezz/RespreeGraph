@@ -58,7 +58,7 @@ const GraphModule = () => {
         // }
     ];
     return (
-        <div class="graphsContainer">
+        <div className="graphsContainer">
             <GlobalControls
                 baseline={baseline}
                 baselineDeviation={baselineDeviation}
@@ -71,7 +71,7 @@ const GraphModule = () => {
                 graphComponentsCheckbox={graphComponentsCheckbox}
             />
             {graphData?.map((element, index) => (
-                <div className='graphContainer'>
+                <div className='graphContainer' key={index}>
                     <GraphComponent 
                         graphs={element} 
                         index={index} 
