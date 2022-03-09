@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ChartControls from "./controls/ChartControls";
-import GraphPlotter from "./graph/GraphPlotter";
+import GraphPlotter from "./graph/GraphPlotter"; 
 
 const GraphComponent = ({
     graphs, 
