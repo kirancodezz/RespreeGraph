@@ -1,10 +1,9 @@
-import HighChrt from './HighChart/HighChart';
-
+import GraphModule from './GraphModule';
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-          <HighChrt/>
+          <GraphModule />
       </header>
     </div>
   );

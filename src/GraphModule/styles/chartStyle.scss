@@ -1,6 +1,6 @@
 .praphComponentsChecks {
     font-family: 'Manrope', sans-serif;
-    margin-top: 70px;
+    margin-top: 10px;
     margin-bottom: 20px;
     ul {
         display: flex;
@@ -42,28 +42,28 @@
         left: 0;
         top: 0;
         margin: 4px;
-        width: 20px;
-        height: 20px;
+        width: 18px;
+        height: 18px;
         background-color: white;
         transition: transform .28s ease;
         border-radius: 7px;
         border: 1px solid #616fbc;
     }
     .checkbox label:after {
-      content: '';
-        display: block;
-        width: 9px;
-        height: 3px;
-        border-bottom: 3px solid #616FBC;
-        border-left: 3px solid #616FBC;
-        -webkit-transform: rotate(-45deg) scale(0);
-        transform: rotate(-45deg) scale(0);
-        transition: transform ease 0.25s;
-        will-change: transform;
-        position: absolute;
-        top: 10px;
-        left: 9px;
-    }
+        content: '';
+          display: block;
+          width: 9px;
+          height: 3px;
+          border-bottom: 2px solid #616FBC;
+          border-left: 2px solid #616FBC;
+          -webkit-transform: rotate(-45deg) scale(0);
+          transform: rotate(-45deg) scale(0);
+          transition: transform ease 0.25s;
+          will-change: transform;
+          position: absolute;
+          top: 10px;
+          left: 9px;
+      }
     .checkbox input[type="checkbox"]:checked ~ label::before {
         box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
         color: #616fbc;
@@ -89,4 +89,13 @@
     .checkbox input[type="checkbox"]:focus + label::before {
         outline: 0;
     }
+}
+.graphsContainer {
+    padding: 30px;
+}
+.graphContainer {
+    margin-bottom: 40px;
+}
+.vitalName{
+    text-transform: capitalize;
 }

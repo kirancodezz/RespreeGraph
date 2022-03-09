@@ -2,15 +2,6 @@ import { useCallback } from "react";
 import { isEmpty } from "lodash";
 import moment from "moment";
 
-// const alertBandColorGradients={
-//   red:["#ffd3d2", "#ffd3d2"],
-//   amber:["#FFE8CF", "#FFE8CF"]
-// }
-// const alertBands={
-//   RED:'RED',
-//   AMBER:'AMBER'
-// }
-
 const useGraphDataFormatter = () => {
   const medianCalculator = useCallback((values) => {
     if (values.length === 0) {
@@ -75,36 +66,6 @@ const useGraphDataFormatter = () => {
     },
     [medianCalculator]
   );
-  /**
-   * @param alertBand red|amber
-   * @param range -[from,to]
-   * @param visibility boolean
-   * @param className- string
-   * 
-   * 
-   */
-  // const createAlertBands=(alertBand="",range=[0,0],visibility=false,className="")=>{
-//   const createAlertBands=({redBand={
-//     alertBand="",range=[0,0],visibility=false,className=""
-//   },amberband={
-//     alertBand="",range=[0,0],visibility=false,className=""
-//   }})=>{
-
-    
-//     if(isEmpty(range)||isEmpty(alertBand)){
-//       return {};
-//     }
-//     const [from,to]=range;
-//     return {
-//       className,
-//       visibility,
-//       stops:alertBand===alertBands.RED ? alertBandColorGradients.red :alertBand=== alertBands.AMBER ? alertBandColorGradients.amber :[],
-//       from,
-//       to,
-//     }
-//   }
-
-//   createAlertBands({redBand:{},amber:{}})
 
   const calculateGraphAlertBands = useCallback(
     (
@@ -120,52 +81,69 @@ const useGraphDataFormatter = () => {
       }
     ) => {
       let alerts = [];
+      // if high or low value does not exist
+      if (!alertsBands?.highRed && !alertsBands?.highAmber) {
+        alerts.push()
+      }
+      if (!alertsBands?.lowRed && !alertsBands?.lowAmber) {
+        alerts.push()
+      }
 
+      // If either one of high value value exist
+      if (alertsBands?.highRed && !alertsBands?.highAmber) {
+        alerts.push({ visibility: alertsBands.redThreshold, color: "#ffd3d2", from: alertsBands.yAxisMax, to: alertsBands?.highRed, });
+      }
+      if (!alertsBands?.highRed && alertsBands?.highAmber) {
+        alerts.push({ visibility: alertsBands.amberThreshold, color: "#ffe8cf", from: alertsBands.highAmber, to: alertsBands.yAxisMax })
+      }
+      // If either one of Low value value exist
+      if (alertsBands?.lowRed && !alertsBands?.lowAmber) {
+        alerts.push({ visibility: alertsBands.redThreshold, color: "#ffd3d2", from: alertsBands.yAxisMin, to: alertsBands?.lowRed, });
+      }
+      if (!alertsBands?.lowRed && alertsBands?.lowAmber) {
+        alerts.push({ visibility: alertsBands.amberThreshold, color: "#ffe8cf", from: alertsBands.lowAmber, to: alertsBands.yAxisMin })
+      }
+
+      // if both high red and high amber exist
       if (alertsBands?.highRed && alertsBands?.highAmber) {
         if (alertsBands?.highRed > alertsBands?.highAmber) {
-          
           alerts.push(
-            { className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
-            { className: "", visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.highRed, to: alertsBands.highAmber }
+            { visibility: alertsBands.redThreshold, color: "#ffd3d2", from: alertsBands.yAxisMax, to: alertsBands?.highRed, },
+            { visibility: alertsBands.amberThreshold, color: "#ffe8cf", from: alertsBands.highRed, to: alertsBands.highAmber }
           );
         } else {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMax, to: alertsBands?.highAmber },
-            { className: "", visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.highAmber, to: alertsBands.highRed, }
+            { visibility: alertsBands.redThreshold, color: "#ffd3d2", from: alertsBands.highRed, to: alertsBands?.highAmber },
+            { visibility: alertsBands.amberThreshold, color: "#ffe8cf", from: alertsBands.highAmber, to: alertsBands.yAxisMax, }
           );
         }
       }
+      // if both low red and low amber exist
       if (alertsBands?.lowRed && alertsBands?.lowAmber) {
         if (alertsBands?.lowRed > alertsBands?.lowAmber) {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
-            {className: "", visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.lowRed, to: alertsBands.lowAmber,}
+            { visibility: alertsBands.redThreshold, color: "#ffd3d2", from: alertsBands.lowRed, to: alertsBands?.lowAmber, },
+            { visibility: alertsBands.amberThreshold, color: "#ffe8cf", from: alertsBands.lowAmber, to: alertsBands.yAxisMin, }
           );
         } else {
           alerts.push(
-            {className: "redBorder", visibility: alertsBands.redThreshold, stops: ["#ffd3d2", "#ffd3d2"], from: alertsBands.yAxisMin, to: alertsBands?.lowRed,}, 
-            {className: "",visibility: alertsBands.amberThreshold, stops: ["#ffe8cf", "#ffe8cf"], from: alertsBands.lowAmber, to: alertsBands.lowRed,}
+            { visibility: alertsBands.redThreshold, color: "#ffd3d2", from: alertsBands.yAxisMin, to: alertsBands?.lowRed, },
+            { visibility: alertsBands.amberThreshold, color: "#ffe8cf", from: alertsBands.lowAmber, to: alertsBands.lowRed, }
           );
         }
       }
+
       const alertObjectCreator = (items) => {
         const object = items?.map((item) => {
           return {
-            className: item.className,
             zIndex: "-1",
-            color: item.visibility ? {
-              linearGradient: { cx: 0.5, cy: 0.5, r: 0.5 },
-              stops: item.stops.map((element, index) => {
-                return [index, element];
-              }),
-            } : "transparent",
+            color: item.visibility ? item.color : "transparent",
             from: item.from,
             to: item.to,
           };
         });
         return object;
       };
-
       return alertObjectCreator(alerts);
     },
     []
