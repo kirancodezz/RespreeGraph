@@ -49,21 +49,21 @@ const GraphPlotter = ({
   const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
   const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
 
-  
-//   useEffect(() => {
-//     const vitals = data?.data?.vitals;
-//     const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
-//     const topVitalValue = Math.max(...vitals);
-//     const topMaxValue = Math.max(...[topThresholdMaximumValue, topVitalValue]);
 
-//     const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
-//     const bottomVitalValue = Math.min(...vitals);
-//     const bottomMaxValue = Math.max(
-//       ...[bottomThresholdMaximumValue, bottomVitalValue]
-//     );
-//     setMax(topMaxValue + 5);
-//     setMin(bottomMaxValue - 5);
-//   }, [lowAmber, lowRed, min, max, highAmber, highRed, yAxisMax, data]);
+  //   useEffect(() => {
+  //     const vitals = data?.data?.vitals;
+  //     const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
+  //     const topVitalValue = Math.max(...vitals);
+  //     const topMaxValue = Math.max(...[topThresholdMaximumValue, topVitalValue]);
+
+  //     const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
+  //     const bottomVitalValue = Math.min(...vitals);
+  //     const bottomMaxValue = Math.max(
+  //       ...[bottomThresholdMaximumValue, bottomVitalValue]
+  //     );
+  //     setMax(topMaxValue + 5);
+  //     setMin(bottomMaxValue - 5);
+  //   }, [lowAmber, lowRed, min, max, highAmber, highRed, yAxisMax, data]);
 
   useEffect(() => {
     setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
@@ -121,18 +121,18 @@ const GraphPlotter = ({
                       ? point.y >= alertThresholds?.highRed
                         ? "#F3857C"
                         : alertThresholds?.highAmber
-                        ? point.y >= alertThresholds?.highAmber
-                          ? "#FFB359"
-                          : alertThresholds?.lowRed
-                          ? point.y <= alertThresholds?.lowRed
-                            ? "#F3857C"
-                            : alertThresholds?.lowAmber
-                            ? point.y <= alertThresholds?.lowAmber
-                              ? "#FFB359"
+                          ? point.y >= alertThresholds?.highAmber
+                            ? "#FFB359"
+                            : alertThresholds?.lowRed
+                              ? point.y <= alertThresholds?.lowRed
+                                ? "#F3857C"
+                                : alertThresholds?.lowAmber
+                                  ? point.y <= alertThresholds?.lowAmber
+                                    ? "#FFB359"
+                                    : ""
+                                  : ""
                               : ""
-                            : ""
                           : ""
-                        : ""
                       : "transparent",
 
                     display: false,
@@ -148,18 +148,18 @@ const GraphPlotter = ({
                   ? element.y >= alertThresholds?.highRed
                     ? "#F3857C"
                     : alertThresholds?.highAmber
-                    ? element.y >= alertThresholds?.highAmber
-                      ? "#FFB359"
-                      : alertThresholds?.lowRed
-                      ? element.y <= alertThresholds?.lowRed
-                        ? "#F3857C"
-                        : alertThresholds?.lowAmber
-                        ? element.y <= alertThresholds?.lowAmber
-                          ? "#FFB359"
+                      ? element.y >= alertThresholds?.highAmber
+                        ? "#FFB359"
+                        : alertThresholds?.lowRed
+                          ? element.y <= alertThresholds?.lowRed
+                            ? "#F3857C"
+                            : alertThresholds?.lowAmber
+                              ? element.y <= alertThresholds?.lowAmber
+                                ? "#FFB359"
+                                : ""
+                              : ""
                           : ""
-                        : ""
                       : ""
-                    : ""
                   : "#1499AD",
                 className: "markerShadow",
                 marker: {
@@ -333,18 +333,22 @@ const GraphPlotter = ({
             value: Number(baseLineValue) + Number(baselineDeviationValues),
             fillColor: deviationIndicator
               ? {
-                  linearGradient: [0, 0, 0, 190],
-                  stops: [
-                    [0, "#1E94E7"],
-                    [
-                      1,
-                      Highcharts.color(Highcharts.getOptions().colors[0])
-                        .setOpacity(0)
-                        .get("rgba"),
-                    ],
+                linearGradient: [0, 0, 0, 190],
+                stops: [
+                  [0, "#1E94E7"],
+                  [
+                    1,
+                    Highcharts.color(Highcharts.getOptions().colors[0])
+                      .setOpacity(0)
+                      .get("rgba"),
                   ],
-                }
+                ],
+              }
               : "transparent",
+          },
+          {
+            value: yAxisMax,
+            fillColor: "transparent"
           },
           {
             value: Number(baseLineValue) - Number(baselineDeviationValues),
@@ -354,17 +358,17 @@ const GraphPlotter = ({
             value: yAxisMin,
             fillColor: deviationIndicator
               ? {
-                  linearGradient: [0, 190, 0, 0],
-                  stops: [
-                    [0, "#1E94E7"],
-                    [
-                      1,
-                      Highcharts.color(Highcharts.getOptions().colors[0])
-                        .setOpacity(0)
-                        .get("rgba"),
-                    ],
+                linearGradient: [0, 190, 0, 0],
+                stops: [
+                  [0, "#1E94E7"],
+                  [
+                    1,
+                    Highcharts.color(Highcharts.getOptions().colors[0])
+                      .setOpacity(0)
+                      .get("rgba"),
                   ],
-                }
+                ],
+              }
               : "transparent",
           },
         ],
@@ -399,7 +403,7 @@ const GraphPlotter = ({
       <HighchartsReact
         highcharts={Highcharts}
         options={options}
-        onLoad={() => {}}
+        onLoad={() => { }}
       ></HighchartsReact>
     </div>
   );

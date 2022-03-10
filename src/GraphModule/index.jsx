@@ -30,7 +30,7 @@ const GraphModule = () => {
         {
             name: 'Respiratory Rate ',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 // vitals: [11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 20],
                 vitals: chartData?.metrics?.["RR"] || [],
                 deviations: chartData?.metrics_SD?.["RR"] || []
@@ -47,7 +47,7 @@ const GraphModule = () => {
         {
             name: 'Respiratory Tidal Depth',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["RR_TD"] || [],
                 deviations: chartData?.metrics_SD?.["RR_TD"] || []
             },
@@ -63,7 +63,7 @@ const GraphModule = () => {
         {
             name: 'Respiratory Duty Cycle',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["RR_DC"] || [],
                 deviations: chartData?.metrics_SD?.["RR_DC"] || []
             },
@@ -79,7 +79,7 @@ const GraphModule = () => {
         {
             name: 'Heart Rate',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["HR"] || [],
                 deviations: chartData?.metrics_SD?.["HR"] || []
             },
@@ -95,7 +95,7 @@ const GraphModule = () => {
         {
             name: 'SpO2',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["SpO2"] || [],
                 deviations: chartData?.metrics_SD?.["SpO2"] || []
             },
@@ -111,7 +111,7 @@ const GraphModule = () => {
         {
             name: 'Systolic Blood Pressure',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["BP_Sys"] || [],
                 deviations: chartData?.metrics_SD?.["BP_Sys"] || []
             },
@@ -127,7 +127,7 @@ const GraphModule = () => {
         {
             name: 'Diastolic Blood Pressure',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["BP_Dia"] || [],
                 deviations: chartData?.metrics_SD?.["BP_Dia"] || []
             },
@@ -143,7 +143,7 @@ const GraphModule = () => {
         {
             name: 'Weight',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["weight"] || [],
                 deviations: chartData?.metrics_SD?.["weight"] || []
             },
@@ -159,7 +159,7 @@ const GraphModule = () => {
         {
             name: 'activity',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["activity"] || [],
                 deviations: chartData?.metrics_SD?.["activity"] || []
             },
@@ -175,7 +175,7 @@ const GraphModule = () => {
         {
             name: 'EWS',
             data: {
-                timestamps: chartData?.metrics?.listdate,
+                timestamps: chartData?.metrics?.listdate || [],
                 vitals: chartData?.metrics?.["EWS"] || [],
                 deviations: chartData?.metrics_SD?.["EWS"] || []
             },
@@ -187,7 +187,24 @@ const GraphModule = () => {
             },
             latestValue: 8,
             latestDeviation: 3
-        }
+        },
+        {
+            name: 'temperature',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["temperature"] || [],
+                deviations: chartData?.metrics_SD?.["temperature"] || []
+            },
+            bandThreshHoldValues: {
+                highRedValue: 38,
+                highAmberValue: 36,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 36,
+            latestDeviation: 9
+        },
+
     ];
     return (
         <div className="graphsContainer">
