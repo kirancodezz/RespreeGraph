@@ -4,6 +4,8 @@ import "../../styles/chartControl.css"
 const ChartControls = ({
     index,
     name,
+    latestValue,
+    latestDeviation,
     setDeviationFromBaseline,
     deviationFromBaseline,
     isCalculatedValueShown,
@@ -19,6 +21,7 @@ const ChartControls = ({
     return (
         <>
             <div className="graphControllerWrapper" style={{display: isMenuCollapsed ? "inline-flex" : "flex"}} key={index}>
+            <div className="controlElements">
                 <div className="controls">
                     <p className="graphName">{name}</p>
                 </div>
@@ -26,8 +29,10 @@ const ChartControls = ({
                     <div className="elementsValues">
                         <p className="label">Latest</p>
                         <div className="vitalValue">
-                            <p className="labelValue">150.80</p>
-                            <p className="minusPlusValue"><span>&#177;</span>10</p>
+                            <span>
+                                <p className="labelValue">{latestValue}</p>
+                                <p className="minusPlusValue"><span>&#177;</span>{latestDeviation}</p>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -81,7 +86,8 @@ const ChartControls = ({
                 </div>
                 </>   : "" 
             }   
-                <button className="colapseButton" style={{margin: isMenuCollapsed ? "3px" : "3px 0px 3px 11px"}} onClick={() => {setIsMenuCollapsed(!isMenuCollapsed)}} >{isMenuCollapsed ? ">>" : "<<"}</button>
+                <button className="colapseButton"  onClick={() => {setIsMenuCollapsed(!isMenuCollapsed)}} >{isMenuCollapsed ? ">>" : "<<"}</button>
+                </div>
             </div>
         </>
     )

@@ -17,7 +17,7 @@ const GraphModule = () => {
     })
     const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     useEffect(() => {
-        fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-02-07T12:14:36&stop_datetime=2022-03-09T12:14:36&id=4&resolution=daily")
+        fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-02-07T12:14:36&stop_datetime=2022-03-09T12:14:36&id=160&resolution=daily")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -31,16 +31,18 @@ const GraphModule = () => {
             name: 'Respiratory Rate ',
             data: {
                 timestamps: chartData?.metrics?.listdate,
-                vitals: [ 11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 20 ],
+                // vitals: [11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 20],
+                vitals: chartData?.metrics?.["RR"] || [],
                 deviations: chartData?.metrics_SD?.["RR"] || []
             },
-            bandThreshHoldValues : {
+            bandThreshHoldValues: {
                 highRedValue: 30,
                 highAmberValue: 25,
                 lowAmberValue: 10,
                 lowRedValue: 8,
             },
-            latestValue: 100.33
+            latestValue: 21,
+            latestDeviation: 9
         },
         {
             name: 'Respiratory Tidal Depth',
@@ -49,28 +51,30 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["RR_TD"] || [],
                 deviations: chartData?.metrics_SD?.["RR_TD"] || []
             },
-            bandThreshHoldValues : {
+            bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 100.33
+            latestValue: 0.89,
+            latestDeviation: 1
         },
         {
-            name: 'Respiratory Tidal Depth',
+            name: 'Respiratory Duty Cycle',
             data: {
                 timestamps: chartData?.metrics?.listdate,
                 vitals: chartData?.metrics?.["RR_DC"] || [],
                 deviations: chartData?.metrics_SD?.["RR_DC"] || []
             },
-            bandThreshHoldValues : {
+            bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 100.33
+            latestValue: 70,
+            latestDeviation: 8
         },
         {
             name: 'Heart Rate',
@@ -79,13 +83,14 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["HR"] || [],
                 deviations: chartData?.metrics_SD?.["HR"] || []
             },
-            bandThreshHoldValues : {
+            bandThreshHoldValues: {
                 highRedValue: 100,
                 highAmberValue: 90,
                 lowAmberValue: 80,
                 lowRedValue: 70,
             },
-            latestValue: 100.33
+            latestValue: 70,
+            latestDeviation: 4
         },
         {
             name: 'SpO2',
@@ -94,13 +99,94 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["SpO2"] || [],
                 deviations: chartData?.metrics_SD?.["SpO2"] || []
             },
-            bandThreshHoldValues : {
+            bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
                 lowAmberValue: 94,
                 lowRedValue: 91,
             },
-            latestValue: 100.33
+            latestValue: 98,
+            latestDeviation: 6
+        },
+        {
+            name: 'Systolic Blood Pressure',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["BP_Sys"] || [],
+                deviations: chartData?.metrics_SD?.["BP_Sys"] || []
+            },
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 120,
+            latestDeviation: 20
+        },
+        {
+            name: 'Diastolic Blood Pressure',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["BP_Dia"] || [],
+                deviations: chartData?.metrics_SD?.["BP_Dia"] || []
+            },
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 85,
+            latestDeviation: 12 
+        },
+        {
+            name: 'Weight',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["weight"] || [],
+                deviations: chartData?.metrics_SD?.["weight"] || []
+            },
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 62,
+            latestDeviation: 10
+        },
+        {
+            name: 'activity',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["activity"] || [],
+                deviations: chartData?.metrics_SD?.["activity"] || []
+            },
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 55,
+            latestDeviation: 10
+        },
+        {
+            name: 'EWS',
+            data: {
+                timestamps: chartData?.metrics?.listdate,
+                vitals: chartData?.metrics?.["EWS"] || [],
+                deviations: chartData?.metrics_SD?.["EWS"] || []
+            },
+            bandThreshHoldValues: {
+                highRedValue: 7,
+                highAmberValue: 5,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 8,
+            latestDeviation: 3
         }
     ];
     return (
@@ -118,9 +204,9 @@ const GraphModule = () => {
             />
             {graphData?.map((element, index) => (
                 <div className='graphContainer' key={index}>
-                    <GraphComponent 
-                        graphs={element} 
-                        index={index} 
+                    <GraphComponent
+                        graphs={element}
+                        index={index}
                         baseline={baseline}
                         baselineDeviation={baselineDeviation}
                         amberThreshold={amberThreshold}

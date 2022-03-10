@@ -225,6 +225,7 @@ const GraphPlotter = ({
       minorGridLineWidth: 0,
       tickLength: 9,
       tickWidth: 1.5,
+      zIndex: 10,
       lineColor: "transparent",
       accessibility: {
         rangeDescription: "Range: Jul 1st 2009 to Jul 31st 2009.",

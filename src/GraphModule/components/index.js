@@ -13,7 +13,7 @@ const GraphComponent = ({
     redThreshold,
     standardDeviation
 }) => {
-    const [baseLineValue, setBaselineValue] = useState();
+    const [baseLineValue, setBaselineValue] = useState(0);
     const [deviationFromBaseline, setDeviationFromBaseline] = useState(10)
     const [isCalculatedValueShown, setIsCalculatedValueShown] = useState(true)
     const [baseLineLowerDeviation, setBaseLineLowerDeviation] = useState(true)
@@ -23,6 +23,8 @@ const GraphComponent = ({
             <ChartControls
                 index={index}
                 name={ graphs.name || "--" }
+                latestValue={ graphs.latestValue || "--" }
+                latestDeviation={graphs.latestDeviation || "" }
                 baseLineValue={ baseLineValue }
                 setBaselineValue={ setBaselineValue }
                 setDeviationFromBaseline={setDeviationFromBaseline}
@@ -33,6 +35,7 @@ const GraphComponent = ({
                 setBaseLineLowerDeviation={setBaseLineLowerDeviation}
                 baseLineUpperDeviation={baseLineUpperDeviation}
                 setBaseLineUpperDeviation={setBaseLineUpperDeviation}
+                
             />
             <GraphPlotter 
                 data={graphs}

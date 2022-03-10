@@ -15,6 +15,8 @@
         border-radius: 0px 4px 4px 0px;
         border: 0;
         color: #606EB9;
+        height: 38px;
+        font-weight: 700;
     }
     .graphName {
         font-family: Manrope;
@@ -27,19 +29,23 @@
     }
     .latestReading {
         padding: 2px 5px 2px 13px;
-        margin: 5px;
         display: flex;
         background: #F1F4FC;
         border-radius: 4px;
+        height: 35px;
     }
     .vitalValue{
         display: flex;
         background: #FFFFFF;
         padding: 1px 6px;
         border-radius: 4px;
+        width: 70px;
+        span {
+          display: flex;
+          margin: auto;
+        }
     }
     .deviationReading {
-        margin: 5px;
         border-radius: 4px;
         background-color: #F1F4FC;
         .deviationHeader{
@@ -99,6 +105,7 @@
     margin: auto 2px;
   }
   .minusPlusValue {
+    display: flex;
     font-weight: 700;
     font-size: 12px;
     color: #6e7d80;
@@ -193,7 +200,7 @@
     background: #616fbc;
   }
   .baslineControl {
-    margin: 4px;
+    // margin: 4px;
   }
   .deviationHeader {
     font-size: 12px;
@@ -380,4 +387,10 @@
 .checkbox input[type="checkbox"]:focus + label::before {
     outline: 0;
 }
-
+.controlElements {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+}
