@@ -32,7 +32,7 @@ const GraphModule = () => {
             name: 'Respiratory Rate ',
             data: {
                 timestamps: chartData?.metrics?.listdate || [],
-                // vitals: [11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 20],
+                // vitals: [11, 10, 25, 32, 24, 24, 25, 38, 25, 24, 2, 24, 25, 33, 24, 22, 4, 24, 23, 39, 22, 12, 25, 37, 24, 15, 22, 19, 6, 3],
                 vitals: chartData?.metrics?.["RR"] || [],
                 deviations: chartData?.metrics_SD?.["RR"] || []
             },

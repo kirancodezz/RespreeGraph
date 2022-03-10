@@ -46,12 +46,16 @@ const GraphPlotter = ({
   const medianValue = chartData.median;
   const deviationGraph = chartData.deviationGraph;
   const formattedTimestamp = chartData.formattedTimestamp;
-  const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
-  const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
+  
+  const topValueOfgraph = chartData?.lineChartValuesOnly ? Math.max(...chartData?.lineChartValuesOnly || "") : "";
+  const minValueOfgraph = chartData?.lineChartValuesOnly ? Math.min(...chartData?.lineChartValuesOnly || "") : "";
+  
+  const highThresholdMaximumValue = highAmber && highRed ? Math.max(...[highAmber, highRed]) : null;
+  const lowThresholdMaximumValue = Math.min(...[highAmber, highRed]);
 
-  useEffect(() => {
-    setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
-  }, [deviationFromBaseline, baseLineValue]);
+  const bottomThresholdMaximumValue = lowAmber && lowRed ?  Math.max(...[lowAmber, lowRed]) : null;
+  const bottomThresholdMinimumValue = Math.min(...[lowAmber, lowRed]);
+  
 
   useEffect(() => {
     setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 12]);
@@ -229,16 +233,21 @@ const GraphPlotter = ({
       gridLineWidth: 1,
       gridLineColor: "#eeeeee",
       minorGridLineWidth: 0,
+      tickInterval: null,
       tickLength: 9,
       tickWidth: 1.5,
+      startOnTick: false,
+      endOnTick: false,
       labels: {
         style: {
           color: "#242637",
           fontSize: "12px",
         },
       },
-      min: bottomThresholdMaximumValue ? bottomThresholdMaximumValue < yAxisMin ? yAxisMax - 3 : bottomThresholdMaximumValue - 2 : null,
-      max: topThresholdMaximumValue ? topThresholdMaximumValue > yAxisMax ? yAxisMax + 3 : topThresholdMaximumValue + 2 : null,
+      min: bottomThresholdMaximumValue ? bottomThresholdMinimumValue < minValueOfgraph ? bottomThresholdMinimumValue - ((bottomThresholdMaximumValue - bottomThresholdMinimumValue)/2) : minValueOfgraph - ((10/100)*bottomThresholdMinimumValue) : null,
+      max: highThresholdMaximumValue ? 
+      topValueOfgraph > highThresholdMaximumValue ? topValueOfgraph + (15/100)*topValueOfgraph : topValueOfgraph < highThresholdMaximumValue ? highThresholdMaximumValue + ((highThresholdMaximumValue - lowThresholdMaximumValue)/2) : ""
+     : null,
       tickColor: "#164f57ba",
       title: {
         text: null,
