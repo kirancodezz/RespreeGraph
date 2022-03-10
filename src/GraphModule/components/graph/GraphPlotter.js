@@ -308,10 +308,11 @@ const GraphPlotter = ({
           `<b class="vitalName">${name}: </b>` +
           pointData.value +
           "<br>" +
-          "<b>Deviation: </b>" +
-          "<span>&#177;</span>" +
-          pointData.deviation +
-          "<br>"
+          `
+          <b>Deviation: </b> 
+          <span>&#177;</span> 
+          ${pointData.deviation || "- -"}
+          <br>`
         );
       },
     },
