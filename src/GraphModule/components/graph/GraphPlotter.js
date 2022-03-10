@@ -289,7 +289,7 @@ const GraphPlotter = ({
         return (
           `${Highcharts.dateFormat("%A, %d %b %Y %H:%M", pointData.timestamp)}<br><br>
             <b class="vitalName">${name}: ${pointData.value || "- -"}</b><br>
-            ${pointData.deviation ? `<b class="Deviation">Deviation: ${pointData.deviation || "- -"}</b><br>` : ""}
+            ${pointData.deviation ? `<b class="Deviation">Deviation: <span>&#177;</span> ${pointData.deviation || "- -"}</b><br>` : ""}
           `
         );
       },
