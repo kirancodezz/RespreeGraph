@@ -49,22 +49,6 @@ const GraphPlotter = ({
   const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
   const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
 
-
-  //   useEffect(() => {
-  //     const vitals = data?.data?.vitals;
-  //     const topThresholdMaximumValue = Math.max(...[highAmber, highRed]);
-  //     const topVitalValue = Math.max(...vitals);
-  //     const topMaxValue = Math.max(...[topThresholdMaximumValue, topVitalValue]);
-
-  //     const bottomThresholdMaximumValue = Math.max(...[lowAmber, lowRed]);
-  //     const bottomVitalValue = Math.min(...vitals);
-  //     const bottomMaxValue = Math.max(
-  //       ...[bottomThresholdMaximumValue, bottomVitalValue]
-  //     );
-  //     setMax(topMaxValue + 5);
-  //     setMin(bottomMaxValue - 5);
-  //   }, [lowAmber, lowRed, min, max, highAmber, highRed, yAxisMax, data]);
-
   useEffect(() => {
     setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
   }, [deviationFromBaseline, baseLineValue]);

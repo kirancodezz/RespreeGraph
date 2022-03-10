@@ -15,9 +15,10 @@ const GraphModule = () => {
         thresholdIndicator: true,
         standardDeviation: true,
     })
+
     const { baseline, baselineDeviation, amberThreshold, redThreshold, thresholdIndicator, standardDeviation, deviationIndicator } = graphComponentsCheckbox
     useEffect(() => {
-        fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-02-07T12:14:36&stop_datetime=2022-03-09T12:14:36&id=160&resolution=daily")
+        fetch("https://u6wawzlr6h.execute-api.ap-southeast-1.amazonaws.com/respiree-api/dev/query/trends?start_datetime=2022-02-08T02:28:49&stop_datetime=2022-03-10T02:28:49&id=160&resolution=daily")
             .then(res => res.json())
             .then(
                 (result) => {
@@ -35,6 +36,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["RR"] || [],
                 deviations: chartData?.metrics_SD?.["RR"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: 30,
                 highAmberValue: 25,
@@ -51,6 +53,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["RR_TD"] || [],
                 deviations: chartData?.metrics_SD?.["RR_TD"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -67,6 +70,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["RR_DC"] || [],
                 deviations: chartData?.metrics_SD?.["RR_DC"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -83,6 +87,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["HR"] || [],
                 deviations: chartData?.metrics_SD?.["HR"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: 100,
                 highAmberValue: 90,
@@ -99,6 +104,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["SpO2"] || [],
                 deviations: chartData?.metrics_SD?.["SpO2"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -115,6 +121,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["BP_Sys"] || [],
                 deviations: chartData?.metrics_SD?.["BP_Sys"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -131,6 +138,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["BP_Dia"] || [],
                 deviations: chartData?.metrics_SD?.["BP_Dia"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -147,6 +155,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["weight"] || [],
                 deviations: chartData?.metrics_SD?.["weight"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -163,6 +172,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["activity"] || [],
                 deviations: chartData?.metrics_SD?.["activity"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: null,
                 highAmberValue: null,
@@ -179,6 +189,7 @@ const GraphModule = () => {
                 vitals: chartData?.metrics?.["EWS"] || [],
                 deviations: chartData?.metrics_SD?.["EWS"] || []
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: 7,
                 highAmberValue: 5,
@@ -193,11 +204,12 @@ const GraphModule = () => {
             data: {
                 timestamps: chartData?.metrics?.listdate,
                 vitals: chartData?.metrics?.["temperature"] || [],
-                deviations: chartData?.metrics_SD?.["temperature"] || []
+                deviations: chartData?.metrics_SD?.["temperature"] || [],
             },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: 38,
-                highAmberValue: 36,
+                highAmberValue: 37.5,
                 lowAmberValue: null,
                 lowRedValue: null,
             },
