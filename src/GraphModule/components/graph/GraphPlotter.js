@@ -46,7 +46,6 @@ const GraphPlotter = ({
   const medianValue = chartData.median;
   const deviationGraph = chartData.deviationGraph;
   const formattedTimestamp = chartData.formattedTimestamp;
-  
   const topValueOfgraph = chartData?.lineChartValuesOnly ? Math.max(...chartData?.lineChartValuesOnly || "") : "";
   const minValueOfgraph = chartData?.lineChartValuesOnly ? Math.min(...chartData?.lineChartValuesOnly || "") : "";
   
@@ -55,7 +54,10 @@ const GraphPlotter = ({
 
   const bottomThresholdMaximumValue = lowAmber && lowRed ?  Math.max(...[lowAmber, lowRed]) : null;
   const bottomThresholdMinimumValue = Math.min(...[lowAmber, lowRed]);
-  
+ 
+  useEffect(() => {
+    setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
+  }, [deviationFromBaseline, baseLineValue]);
 
   useEffect(() => {
     setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 12]);
