@@ -216,6 +216,7 @@ const GraphModule = () => {
             latestValue: 36,
             latestDeviation: 9
         },
+
     ];
     return (
         <div className="graphsContainer">

@@ -87,6 +87,7 @@ const GraphPlotter = ({
           setYAxisMax(chart.axes[1].max);
           setYAxisMin(chart.axes[1].min);
         },
+
         load: function () {
           const chart = this;
           setTimeout(() => {
@@ -107,24 +108,23 @@ const GraphPlotter = ({
                     class: "customLine",
                     "stroke-width": 2.2,
                     zIndex: 4,
-                    stroke: alertThresholds?.highRed
-                      ? point.y >= alertThresholds?.highRed
+                    stroke: highRed
+                      ? point.y >= highRed
                         ? "#F3857C"
-                        : alertThresholds?.highAmber
-                          ? point.y >= alertThresholds?.highAmber
+                        : highAmber
+                          ? point.y >= highAmber
                             ? "#FFB359"
-                            : alertThresholds?.lowRed
-                              ? point.y <= alertThresholds?.lowRed
+                            : lowRed
+                              ? point.y <= lowRed
                                 ? "#F3857C"
-                                : alertThresholds?.lowAmber
-                                  ? point.y <= alertThresholds?.lowAmber
+                                : lowAmber
+                                  ? point.y <= lowAmber
                                     ? "#FFB359"
                                     : ""
                                   : ""
                               : ""
                           : ""
                       : "transparent",
-
                     display: false,
                   })
                   .add();
@@ -134,17 +134,17 @@ const GraphPlotter = ({
             const data = chart.series[0].data;
             data.forEach((element) => {
               element.update({
-                color: alertThresholds?.highRed
-                  ? element.y >= alertThresholds?.highRed
+                color: highRed
+                  ? element.y >= highRed
                     ? "#F3857C"
-                    : alertThresholds?.highAmber
-                      ? element.y >= alertThresholds?.highAmber
+                    : highAmber
+                      ? element.y >= highAmber
                         ? "#FFB359"
-                        : alertThresholds?.lowRed
-                          ? element.y <= alertThresholds?.lowRed
+                        : lowRed
+                          ? element.y <= lowRed
                             ? "#F3857C"
-                            : alertThresholds?.lowAmber
-                              ? element.y <= alertThresholds?.lowAmber
+                            : lowAmber
+                              ? element.y <= lowAmber
                                 ? "#FFB359"
                                 : ""
                               : ""
@@ -159,6 +159,7 @@ const GraphPlotter = ({
             });
           }, 900);
         },
+
         render: function () {
           let chart = this;
           setTimeout(() => {
@@ -183,6 +184,7 @@ const GraphPlotter = ({
             });
           }, 50);
         },
+
       },
     },
     title: {
@@ -206,6 +208,7 @@ const GraphPlotter = ({
         enableMouseTracking: false,
       },
     },
+
     xAxis: {
       // range: 1,
       min: dateRange,
@@ -260,7 +263,7 @@ const GraphPlotter = ({
       },
       plotLines: [
         {
-          color: baseline ? "#0A9954" : "transparent",
+          color: baseline ? "#7CBFC9" : "transparent",
           dashStyle: "Dash",
           visible: false,
           // zIndex: 3,
@@ -270,24 +273,24 @@ const GraphPlotter = ({
         {
           color:
             baseLineLowerDeviation && baselineDeviation
-              ? "#70cbb5"
+              ? "#93D1DA"
               : "transparent",
           dashStyle: "long",
           // zIndex: 3,
           value: baseLineValue - baselineDeviationValues,
-          width: 2.5,
+          width: 2,
         },
         {
           color:
             baseLineUpperDeviation && baselineDeviation
-              ? "#70cbb5"
+              ? "#93D1DA"
               : "transparent",
           dashStyle: "long",
           shadow: true,
           // className: "plotlineshadow",
           value: Number(baseLineValue) + Number(baselineDeviationValues),
           // zIndex: 3,
-          width: 2.5,
+          width: 2,
         },
       ],
       plotBands: alertBands,
