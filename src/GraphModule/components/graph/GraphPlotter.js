@@ -303,19 +303,15 @@ const GraphPlotter = ({
           (row) => row.timestamp === this.point.x
         );
         return (
-          Highcharts.dateFormat("%A, %d %b %Y %H:%M", pointData.timestamp) +
-          "<br><br>" +
-          `<b class="vitalName">${name}: </b>` +
-          pointData.value +
-          "<br>" +
+          `${Highcharts.dateFormat("%A, %d %b %Y %H:%M", pointData.timestamp)}<br><br>
+            <b class="vitalName">${name}: ${pointData.value || "- -"}</b><br>
+            ${pointData.deviation ? `<b class="Deviation">Deviation: ${pointData.deviation || "- -"}</b><br>` : ""}
           `
-          <b>Deviation: </b> 
-          <span>&#177;</span> 
-          ${pointData.deviation || "- -"}
-          <br>`
         );
       },
     },
+
+
     series: [
       {
         name: "Temperature",
