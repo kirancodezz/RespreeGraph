@@ -47,40 +47,6 @@ const GraphModule = () => {
             latestDeviation: 9
         },
         {
-            name: 'Respiratory Tidal Depth',
-            data: {
-                timestamps: chartData?.metrics?.listdate || [],
-                vitals: chartData?.metrics?.["RR_TD"] || [],
-                deviations: chartData?.metrics_SD?.["RR_TD"] || []
-            },
-            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
-            bandThreshHoldValues: {
-                highRedValue: null,
-                highAmberValue: null,
-                lowAmberValue: null,
-                lowRedValue: null,
-            },
-            latestValue: 0.89,
-            latestDeviation: 1
-        },
-        {
-            name: 'Respiratory Duty Cycle',
-            data: {
-                timestamps: chartData?.metrics?.listdate || [],
-                vitals: chartData?.metrics?.["RR_DC"] || [],
-                deviations: chartData?.metrics_SD?.["RR_DC"] || []
-            },
-            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
-            bandThreshHoldValues: {
-                highRedValue: null,
-                highAmberValue: null,
-                lowAmberValue: null,
-                lowRedValue: null,
-            },
-            latestValue: 70,
-            latestDeviation: 8
-        },
-        {
             name: 'Heart Rate',
             data: {
                 timestamps: chartData?.metrics?.listdate || [],
@@ -113,57 +79,6 @@ const GraphModule = () => {
             },
             latestValue: 98,
             latestDeviation: 6
-        },
-        {
-            name: 'Systolic Blood Pressure',
-            data: {
-                timestamps: chartData?.metrics?.listdate || [],
-                vitals: chartData?.metrics?.["BP_Sys"] || [],
-                deviations: chartData?.metrics_SD?.["BP_Sys"] || []
-            },
-            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
-            bandThreshHoldValues: {
-                highRedValue: null,
-                highAmberValue: null,
-                lowAmberValue: null,
-                lowRedValue: null,
-            },
-            latestValue: 120,
-            latestDeviation: 20
-        },
-        {
-            name: 'Diastolic Blood Pressure',
-            data: {
-                timestamps: chartData?.metrics?.listdate || [],
-                vitals: chartData?.metrics?.["BP_Dia"] || [],
-                deviations: chartData?.metrics_SD?.["BP_Dia"] || []
-            },
-            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
-            bandThreshHoldValues: {
-                highRedValue: null,
-                highAmberValue: null,
-                lowAmberValue: null,
-                lowRedValue: null,
-            },
-            latestValue: 85,
-            latestDeviation: 12 
-        },
-        {
-            name: 'Weight',
-            data: {
-                timestamps: chartData?.metrics?.listdate || [],
-                vitals: chartData?.metrics?.["weight"] || [],
-                deviations: chartData?.metrics_SD?.["weight"] || []
-            },
-            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
-            bandThreshHoldValues: {
-                highRedValue: null,
-                highAmberValue: null,
-                lowAmberValue: null,
-                lowRedValue: null,
-            },
-            latestValue: 62,
-            latestDeviation: 10
         },
         {
             name: 'activity',
@@ -200,6 +115,91 @@ const GraphModule = () => {
             latestDeviation: 3
         },
         {
+            name: 'Weight',
+            data: {
+                timestamps: chartData?.metrics?.listdate || [],
+                vitals: chartData?.metrics?.["weight"] || [],
+                deviations: chartData?.metrics_SD?.["weight"] || []
+            },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 62,
+            latestDeviation: 10
+        },
+        {
+            name: 'Systolic Blood Pressure',
+            data: {
+                timestamps: chartData?.metrics?.listdate || [],
+                vitals: chartData?.metrics?.["BP_Sys"] || [],
+                deviations: chartData?.metrics_SD?.["BP_Sys"] || []
+            },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 120,
+            latestDeviation: 20
+        },
+        {
+            name: 'Diastolic Blood Pressure',
+            data: {
+                timestamps: chartData?.metrics?.listdate || [],
+                vitals: chartData?.metrics?.["BP_Dia"] || [],
+                deviations: chartData?.metrics_SD?.["BP_Dia"] || []
+            },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 85,
+            latestDeviation: 12 
+        },
+        {
+            name: 'Respiratory Tidal Depth',
+            data: {
+                timestamps: chartData?.metrics?.listdate || [],
+                vitals: chartData?.metrics?.["RR_TD"] || [],
+                deviations: chartData?.metrics_SD?.["RR_TD"] || []
+            },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 0.89,
+            latestDeviation: 1
+        },
+        {
+            name: 'Respiratory Duty Cycle',
+            data: {
+                timestamps: chartData?.metrics?.listdate || [],
+                vitals: chartData?.metrics?.["RR_DC"] || [],
+                deviations: chartData?.metrics_SD?.["RR_DC"] || []
+            },
+            mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
+            bandThreshHoldValues: {
+                highRedValue: null,
+                highAmberValue: null,
+                lowAmberValue: null,
+                lowRedValue: null,
+            },
+            latestValue: 70,
+            latestDeviation: 8
+        },
+        {
             name: 'temperature',
             data: {
                 timestamps: chartData?.metrics?.listdate,
@@ -216,7 +216,6 @@ const GraphModule = () => {
             latestValue: 36,
             latestDeviation: 9
         },
-
     ];
     return (
         <div className="graphsContainer">
