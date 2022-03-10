@@ -376,10 +376,10 @@ const GraphPlotter = ({
         shadow: {
           color: "black",
           width: 20,
-          opacity: 0.003,
+          opacity: 0.004,
           // offsetY: 10
         },
-        opacity: 0.7,
+        opacity: 0.9,
         color: "#E8E6E6",
         tooltip: {
           enabled: false,
