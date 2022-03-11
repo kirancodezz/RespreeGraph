@@ -6,7 +6,7 @@ import useGraphDataFormatter from "../../Hooks/useGraphDataFormatter";
 
 const GraphPlotter = ({
   data,
-  name,
+  chartNname,
   deviationFromBaseline,
   isCalculatedValueShown,
   baseLineLowerDeviation,
@@ -22,7 +22,7 @@ const GraphPlotter = ({
   standardDeviation,
 }) => {
   
-  HC_more(Highcharts); // HighChart more extension initialization
+  HC_more(Highcharts); // HighChart-more extension initialization for additional functionality
 
   const [yAxisMax, setYAxisMax] = useState(0);
   const [yAxisMin, setYAxisMin] = useState(0);
@@ -109,6 +109,7 @@ const GraphPlotter = ({
   const onlyLowValuesAndHighRed = highRed && !highAmber && lowRed && lowAmber
   const onlyLowValuesAndHighAmber = !highRed && highAmber && lowRed && lowAmber
 
+  // chart options
   const options = {
     chart: {
       title: "",
@@ -148,7 +149,7 @@ const GraphPlotter = ({
                     class: "customLine",
                     "stroke-width": 2.2,
                     zIndex: 4,
-                    stroke: // marker color condition // 
+                    stroke: // vertical line color condition 
                     noAlerts ? "transparent" :
                       onlyHighRed ? point.y >= highRed ? "#F3857C" : "transparent" :
                         onlyHighAmber ? point.y >= highAmber ? "#FFB359" : "transparent" :
@@ -198,7 +199,7 @@ const GraphPlotter = ({
                                               allAlerts ? allAlertsCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
                                                 element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD"
                                                 : "#1499AD",
-                className: "markerShadow",
+                classchartNname: "markerShadow",
                 marker: {
                   radius: 8.6,
                 },
@@ -272,7 +273,7 @@ const GraphPlotter = ({
       labels: {
         align: "center",
         useHTML: true,
-        formatter: function () { // Custom tooltip 
+        formatter: function () { 
           const month = Highcharts.dateFormat("%b", this.value);
           const day = Highcharts.dateFormat("%e", this.value);
           return `<div class="daydateWrapper"><p class="dayDate" >${month}<br></p><p class="dayStyle">${day}</p></div>`;
@@ -312,7 +313,6 @@ const GraphPlotter = ({
           color: baseline ? "#7CBFC9" : "transparent",
           dashStyle: "Dash",
           visible: false,
-          // zIndex: 3,
           value: baseLineValue,
           width: 2.5,
         },
@@ -322,7 +322,6 @@ const GraphPlotter = ({
               ? "#93D1DA"
               : "transparent",
           dashStyle: "long",
-          // zIndex: 3,
           value: baseLineValue - baselineDeviationValues,
           width: 2,
         },
@@ -333,22 +332,20 @@ const GraphPlotter = ({
               : "transparent",
           dashStyle: "long",
           shadow: true,
-          // className: "plotlineshadow",
           value: Number(baseLineValue) + Number(baselineDeviationValues),
-          // zIndex: 3,
           width: 2,
         },
       ],
       plotBands: alertBands,
     },
     tooltip: {
-      formatter() {
+      formatter() { // Custom tooltip data
         const pointData = graphDataWithDeviation.find(
           (row) => row.timestamp === this.point.x
         );
         return (
           `${Highcharts.dateFormat("%A, %d %b %Y %H:%M", pointData.timestamp)}<br><br>
-            <b class="vitalName">${name}: ${pointData.value || "- -"}</b><br>
+            <b class="vitalName">${chartNname}: ${pointData.value || "- -"}</b><br>
             ${pointData.deviation ? `<b class="Deviation">Deviation: <span>&#177;</span> ${pointData.deviation || "- -"}</b><br>` : ""}
           `
         );
@@ -358,7 +355,7 @@ const GraphPlotter = ({
 
     series: [
       {
-        name: "Temperature",
+        name: chartNname,
         color: "#1499AD",
         type: "areaspline",
         data: lineGraphData,

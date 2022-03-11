@@ -22,7 +22,7 @@ const GraphComponent = ({
         <>
             <ChartControls
                 index={index}
-                name={ graphs.name || "--" }
+                chartNname={ graphs.name || "--" }
                 latestValue={ graphs.latestValue || "--" }
                 latestDeviation={graphs.latestDeviation || "" }
                 baseLineValue={ baseLineValue }
@@ -39,7 +39,7 @@ const GraphComponent = ({
             />
             <GraphPlotter 
                 data={graphs}
-                name={ graphs.name || "--" }
+                chartNname={ graphs.name || "--" }
                 baseLineValue={baseLineValue}
                 setBaselineValue={setBaselineValue}
                 deviationFromBaseline={deviationFromBaseline}

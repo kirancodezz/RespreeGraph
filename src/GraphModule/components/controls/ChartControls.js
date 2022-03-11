@@ -3,7 +3,7 @@ import "../../styles/chartControl.css";
 
 const ChartControls = ({
   index,
-  name,
+  chartNname,
   latestValue,
   latestDeviation,
   setDeviationFromBaseline,
@@ -27,7 +27,7 @@ const ChartControls = ({
       >
         <div className="controlElements">
           <div className="controls">
-            <p className="graphName">{name}</p>
+            <p className="graphName">{chartNname}</p>
           </div>
           <div className="latestReading">
             <div className="elementsValues">
