@@ -18,28 +18,30 @@ const GraphComponent = ({
     const [isCalculatedValueShown, setIsCalculatedValueShown] = useState(true)
     const [baseLineLowerDeviation, setBaseLineLowerDeviation] = useState(true)
     const [baseLineUpperDeviation, setBaseLineUpperDeviation] = useState(true)
+    const latestVitalValue = graphs?.data?.vitals.length === 1 ? graphs?.data?.vitals[0] : graphs?.data?.vitals.length > 0 ? graphs?.data?.vitals[(graphs?.data?.vitals.length - 1)] : "--"
+    const latestVitalDeviation = graphs?.data?.deviations.length === 1 ? graphs?.data?.deviations[0] : graphs?.data?.deviations.length > 0 ? graphs?.data?.deviations[(graphs?.data?.deviations.length - 1)] : ""
+    
     return(
         <>
             <ChartControls
                 index={index}
-                chartNname={ graphs.name || "--" }
-                latestValue={ graphs.latestValue || "--" }
-                latestDeviation={graphs.latestDeviation || "" }
+                chartName= { graphs.name || "--" }
+                latestVitalValue = { latestVitalValue }
+                latestVitalDeviation = { latestVitalDeviation }
                 baseLineValue={ baseLineValue }
                 setBaselineValue={ setBaselineValue }
-                setDeviationFromBaseline={setDeviationFromBaseline}
-                deviationFromBaseline={deviationFromBaseline}
-                isCalculatedValueShown={isCalculatedValueShown}
-                setIsCalculatedValueShown={setIsCalculatedValueShown}
-                baseLineLowerDeviation={baseLineLowerDeviation}
+                setDeviationFromBaseline={ setDeviationFromBaseline }
+                deviationFromBaseline={ deviationFromBaseline }
+                isCalculatedValueShown={ isCalculatedValueShown }
+                setIsCalculatedValueShown={ setIsCalculatedValueShown }
+                baseLineLowerDeviation={ baseLineLowerDeviation }
                 setBaseLineLowerDeviation={setBaseLineLowerDeviation}
                 baseLineUpperDeviation={baseLineUpperDeviation}
                 setBaseLineUpperDeviation={setBaseLineUpperDeviation}
-                
             />
             <GraphPlotter 
                 data={graphs}
-                chartNname={ graphs.name || "--" }
+                chartName={ graphs.name || "--" }
                 baseLineValue={baseLineValue}
                 setBaselineValue={setBaselineValue}
                 deviationFromBaseline={deviationFromBaseline}

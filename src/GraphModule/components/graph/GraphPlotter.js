@@ -6,7 +6,7 @@ import useGraphDataFormatter from "../../Hooks/useGraphDataFormatter";
 
 const GraphPlotter = ({
   data,
-  chartNname,
+  chartName,
   deviationFromBaseline,
   isCalculatedValueShown,
   baseLineLowerDeviation,
@@ -70,7 +70,7 @@ const GraphPlotter = ({
 
   // To set the range of xAxis, To show from which date it should start
   useEffect(() => {
-    setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 12]);
+    setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 10]);
   }, [formattedTimestamp, dateRange]);
 
   // To set baseline
@@ -199,7 +199,7 @@ const GraphPlotter = ({
                                               allAlerts ? allAlertsCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
                                                 element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD"
                                                 : "#1499AD",
-                classchartNname: "markerShadow",
+                classchartName: "markerShadow",
                 marker: {
                   radius: 8.6,
                 },
@@ -345,7 +345,7 @@ const GraphPlotter = ({
         );
         return (
           `${Highcharts.dateFormat("%A, %d %b %Y %H:%M", pointData.timestamp)}<br><br>
-            <b class="vitalName">${chartNname}: ${pointData.value || "- -"}</b><br>
+            <b class="vitalName">${chartName}: ${pointData.value || "- -"}</b><br>
             ${pointData.deviation ? `<b class="Deviation">Deviation: <span>&#177;</span> ${pointData.deviation || "- -"}</b><br>` : ""}
           `
         );
@@ -355,7 +355,7 @@ const GraphPlotter = ({
 
     series: [
       {
-        name: chartNname,
+        name: chartName,
         color: "#1499AD",
         type: "areaspline",
         data: lineGraphData,

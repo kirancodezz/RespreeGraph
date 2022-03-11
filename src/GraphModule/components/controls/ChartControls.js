@@ -3,9 +3,9 @@ import "../../styles/chartControl.css";
 
 const ChartControls = ({
   index,
-  chartNname,
-  latestValue,
-  latestDeviation,
+  chartName,
+  latestVitalValue,
+  latestVitalDeviation,
   setDeviationFromBaseline,
   deviationFromBaseline,
   isCalculatedValueShown,
@@ -27,18 +27,21 @@ const ChartControls = ({
       >
         <div className="controlElements">
           <div className="controls">
-            <p className="graphName">{chartNname}</p>
+            <p className="graphName">{chartName}</p>
           </div>
           <div className="latestReading">
             <div className="elementsValues">
               <p className="label">Latest</p>
               <div className="vitalValue">
                 <span>
-                  <p className="labelValue">{latestValue}</p>
+                  <p className="labelValue">{latestVitalValue}</p>
+                  {latestVitalDeviation ? 
                   <p className="minusPlusValue">
                     <span>&#177;</span>
-                    {latestDeviation}
-                  </p>
+                    {latestVitalDeviation}
+                  </p> : 
+                  ""}
+                  
                 </span>
               </div>
             </div>

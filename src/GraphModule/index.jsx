@@ -43,8 +43,6 @@ const GraphModule = () => {
                 lowRedValue: 10,
                 lowAmberValue: 15,
             },
-            latestValue: 21,
-            latestDeviation: 9
         },
         {
             name: 'Heart Rate',
@@ -60,8 +58,6 @@ const GraphModule = () => {
                 lowAmberValue: 80,
                 lowRedValue: 70,
             },
-            latestValue: 70,
-            latestDeviation: 4
         },
         {
             name: 'SpO2',
@@ -77,8 +73,6 @@ const GraphModule = () => {
                 lowAmberValue: 94,
                 lowRedValue: 91,
             },
-            latestValue: 98,
-            latestDeviation: 6
         },
         {
             name: 'activity',
@@ -94,8 +88,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 55,
-            latestDeviation: 10
         },
         {
             name: 'EWS',
@@ -111,8 +103,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 8,
-            latestDeviation: 3
         },
         {
             name: 'Weight',
@@ -128,8 +118,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 62,
-            latestDeviation: 10
         },
         {
             name: 'Systolic Blood Pressure',
@@ -145,8 +133,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 120,
-            latestDeviation: 20
         },
         {
             name: 'Diastolic Blood Pressure',
@@ -162,8 +148,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 85,
-            latestDeviation: 12 
         },
         {
             name: 'Respiratory Tidal Depth',
@@ -179,8 +163,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 0.89,
-            latestDeviation: 1
         },
         {
             name: 'Respiratory Duty Cycle',
@@ -196,8 +178,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 70,
-            latestDeviation: 8
         },
         {
             name: 'temperature',
@@ -213,8 +193,6 @@ const GraphModule = () => {
                 lowAmberValue: null,
                 lowRedValue: null,
             },
-            latestValue: 36,
-            latestDeviation: 9
         },
 
     ];
