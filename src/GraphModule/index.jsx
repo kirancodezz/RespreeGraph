@@ -39,9 +39,9 @@ const GraphModule = () => {
             mean: chartData?.metrics_SD?.["metrics_overall_mean"] || 0,
             bandThreshHoldValues: {
                 highRedValue: 30,
-                highAmberValue: 25,
-                lowAmberValue: 10,
-                lowRedValue: 8,
+                highAmberValue: 20,
+                lowRedValue: 10,
+                lowAmberValue: 15,
             },
             latestValue: 21,
             latestDeviation: 9

@@ -48,13 +48,13 @@ const GraphPlotter = ({
   const formattedTimestamp = chartData.formattedTimestamp;
   const topValueOfgraph = chartData?.lineChartValuesOnly ? Math.max(...chartData?.lineChartValuesOnly || "") : "";
   const minValueOfgraph = chartData?.lineChartValuesOnly ? Math.min(...chartData?.lineChartValuesOnly || "") : "";
-  
+
   const highThresholdMaximumValue = highAmber && highRed ? Math.max(...[highAmber, highRed]) : null;
   const lowThresholdMaximumValue = Math.min(...[highAmber, highRed]);
 
-  const bottomThresholdMaximumValue = lowAmber && lowRed ?  Math.max(...[lowAmber, lowRed]) : null;
+  const bottomThresholdMaximumValue = lowAmber && lowRed ? Math.max(...[lowAmber, lowRed]) : null;
   const bottomThresholdMinimumValue = Math.min(...[lowAmber, lowRed]);
- 
+
   useEffect(() => {
     setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
   }, [deviationFromBaseline, baseLineValue]);
@@ -69,6 +69,32 @@ const GraphPlotter = ({
     }
   }, [isCalculatedValueShown, medianValue, setBaselineValue]);
 
+  // conditions
+  const noAlerts = !highRed && !highAmber && !lowRed && !lowAmber // No alert points
+  const allAlerts = highRed && highAmber && lowRed && lowAmber // All alert points present
+  const allAlertsCondition = (highRed > highAmber) && (lowAmber > lowRed) // condition to check which alert value is greater
+
+  const onlyHighRed = highRed && !highAmber && !lowRed && !lowAmber //
+  const onlyHighAmber = !highRed && highAmber && !lowRed && !lowAmber
+  const onlyLowRed = !highRed && !highAmber && lowRed && !lowAmber
+  const onlylowAmber = !highRed && !highAmber && !lowRed && lowAmber
+
+  const onlyHighValues = highRed && highAmber && !lowRed && !lowAmber
+  const onlyHighValuesCondition = highRed > highAmber
+
+  const onlyLowValues = !highRed && !highAmber && lowRed && lowAmber
+  const onlyLowValuesCondition = lowRed > lowAmber
+
+  const onlyHighAmberAndLowAmber = !highRed && highAmber && !lowRed && lowAmber
+  const onlyHighRedLowRed = highRed && !highAmber && lowRed && !lowAmber
+  const onlyHighRedLowAmber = highRed && !highAmber && !lowRed && lowAmber
+  const onlyHighAmberLowRed = !highRed && highAmber && lowRed && !lowAmber
+
+  const onlyHighValuesAndLowRed = highRed && highAmber && lowRed && !lowAmber
+  const onlyHighValuesAndLowAmber = highRed && highAmber && !lowRed && lowAmber
+  const onlyLowValuesAndHighRed = highRed && !highAmber && lowRed && lowAmber
+  const onlyLowValuesAndHighAmber = !highRed && highAmber && lowRed && lowAmber
+
   const options = {
     chart: {
       title: "",
@@ -80,7 +106,7 @@ const GraphPlotter = ({
         scrollPositionX: 1,
       },
       animation: true,
-      height: "250",
+      height: "240",
       events: {
         redraw: function () {
           const chart = this;
@@ -108,23 +134,26 @@ const GraphPlotter = ({
                     class: "customLine",
                     "stroke-width": 2.2,
                     zIndex: 4,
-                    stroke: highRed
-                      ? point.y >= highRed
-                        ? "#F3857C"
-                        : highAmber
-                          ? point.y >= highAmber
-                            ? "#FFB359"
-                            : lowRed
-                              ? point.y <= lowRed
-                                ? "#F3857C"
-                                : lowAmber
-                                  ? point.y <= lowAmber
-                                    ? "#FFB359"
-                                    : ""
-                                  : ""
-                              : ""
-                          : ""
-                      : "transparent",
+                    stroke: noAlerts ? "transparent" :
+                      onlyHighRed ? point.y >= highRed ? "#F3857C" : "transparent" :
+                        onlyHighAmber ? point.y >= highAmber ? "#FFB359" : "transparent" :
+                          onlyLowRed ? point.y <= lowRed ? "#F3857C" : "transparent" :
+                            onlylowAmber ? point.y <= lowAmber ? "#FFB359" : "transparent" :
+
+                              onlyHighValues ? onlyHighValuesCondition ? point.y >= highRed ? "#F3857C" : point.y >= highAmber ? "#FFB359" : "transparent" : point.y >= highAmber ? "#FFB359" : point.y >= highRed ? "#F3857C" : "transparent" :
+                                onlyLowValues ? onlyLowValuesCondition ? point.y <= lowAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                  onlyHighAmberAndLowAmber ? point.y >= highAmber ? "#FFB359" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                    onlyHighRedLowRed ? point.y >= highRed ? "#F3857C" : point.y <= lowRed ? "#F3857C" : "transparent" :
+                                      onlyHighRedLowAmber ? point.y >= highRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                        onlyHighAmberLowRed ? point.y >= highAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent" :
+
+                                          onlyHighValuesAndLowRed ? onlyHighValuesCondition ? point.y >= highRed ? "#F3857C" : point.y >= highAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent" : point.y >= highAmber ? "#FFB359" : point.y >= highRed ? "#F3857C" : point.y <= lowRed ? "#F3857C" : "transparent" :
+                                            onlyHighValuesAndLowAmber ? onlyHighValuesCondition ? point.y >= highRed ? "#F3857C" : point.y >= highAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" : point.y >= highAmber ? "#FFB359" : point.y >= highRed ? "#F3857C" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                              onlyLowValuesAndHighAmber ? point.y >= highAmber ? "#FFB359" : onlyLowValuesCondition ? point.y <= lowAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent" : point.y >= highAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                                onlyLowValuesAndHighRed ? point.y >= highRed ? "#F3857C" : onlyLowValuesCondition ? point.y <= lowAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent" : point.y >= highRed ? "#F3857C" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                                  allAlerts ? allAlertsCondition ? point.y >= highRed ? "#F3857C" : point.y >= highAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
+                                                    point.y >= highAmber ? "#FFB359" : point.y >= highRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent"
+                                                    : "transparent",
                     display: false,
                   })
                   .add();
@@ -132,25 +161,32 @@ const GraphPlotter = ({
               });
             });
             const data = chart.series[0].data;
+
             data.forEach((element) => {
+              console.log(
+
+              )
               element.update({
-                color: highRed
-                  ? element.y >= highRed
-                    ? "#F3857C"
-                    : highAmber
-                      ? element.y >= highAmber
-                        ? "#FFB359"
-                        : lowRed
-                          ? element.y <= lowRed
-                            ? "#F3857C"
-                            : lowAmber
-                              ? element.y <= lowAmber
-                                ? "#FFB359"
-                                : ""
-                              : ""
-                          : ""
-                      : ""
-                  : "#1499AD",
+                color: noAlerts ? "#1499AD" :
+                  onlyHighRed ? element.y >= highRed ? "#F3857C" : "#1499AD" :
+                    onlyHighAmber ? element.y >= highAmber ? "#FFB359" : "#1499AD" :
+                      onlyLowRed ? element.y <= lowRed ? "#F3857C" : "#1499AD" :
+                        onlylowAmber ? element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+
+                          onlyHighValues ? onlyHighValuesCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : "#1499AD" : element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : "#1499AD" :
+                            onlyLowValues ? onlyLowValuesCondition ? element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                              onlyHighAmberAndLowAmber ? element.y >= highAmber ? "#FFB359" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                                onlyHighRedLowRed ? element.y >= highRed ? "#F3857C" : element.y <= lowRed ? "#F3857C" : "#1499AD" :
+                                  onlyHighRedLowAmber ? element.y >= highRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                                    onlyHighAmberLowRed ? element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD" :
+
+                                      onlyHighValuesAndLowRed ? onlyHighValuesCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD" : element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : element.y <= lowRed ? "#F3857C" : "#1499AD" :
+                                        onlyHighValuesAndLowAmber ? onlyHighValuesCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" : element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                                          onlyLowValuesAndHighAmber ? element.y >= highAmber ? "#FFB359" : onlyLowValuesCondition ? element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD" : element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                                            onlyLowValuesAndHighRed ? element.y >= highRed ? "#F3857C" : onlyLowValuesCondition ? element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD" : element.y >= highRed ? "#F3857C" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                                              allAlerts ? allAlertsCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                                                element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD"
+                                                : "#1499AD",
                 className: "markerShadow",
                 marker: {
                   radius: 8.6,
@@ -249,10 +285,10 @@ const GraphPlotter = ({
           fontSize: "12px",
         },
       },
-      min: bottomThresholdMaximumValue ? bottomThresholdMinimumValue < minValueOfgraph ? bottomThresholdMinimumValue - ((bottomThresholdMaximumValue - bottomThresholdMinimumValue)/2) : minValueOfgraph - ((10/100)*bottomThresholdMinimumValue) : null,
-      max: highThresholdMaximumValue ? 
-      topValueOfgraph > highThresholdMaximumValue ? topValueOfgraph + (15/100)*topValueOfgraph : topValueOfgraph < highThresholdMaximumValue ? highThresholdMaximumValue + ((highThresholdMaximumValue - lowThresholdMaximumValue)/2) : ""
-     : null,
+      min: bottomThresholdMaximumValue ? bottomThresholdMinimumValue < minValueOfgraph ? bottomThresholdMinimumValue - ((bottomThresholdMaximumValue - bottomThresholdMinimumValue) / 2) : minValueOfgraph - ((10 / 100) * bottomThresholdMinimumValue) : null,
+      max: highThresholdMaximumValue ?
+        topValueOfgraph > highThresholdMaximumValue ? topValueOfgraph + (15 / 100) * topValueOfgraph : topValueOfgraph < highThresholdMaximumValue ? highThresholdMaximumValue + ((highThresholdMaximumValue - lowThresholdMaximumValue) / 2) : ""
+        : null,
       tickColor: "#164f57ba",
       title: {
         text: null,
