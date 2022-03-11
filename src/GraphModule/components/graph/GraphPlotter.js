@@ -21,13 +21,16 @@ const GraphPlotter = ({
   redThreshold,
   standardDeviation,
 }) => {
-  HC_more(Highcharts);
+  
+  HC_more(Highcharts); // HighChart more extension initialization
+
   const [yAxisMax, setYAxisMax] = useState(0);
   const [yAxisMin, setYAxisMin] = useState(0);
   const [dateRange, setDateRange] = useState();
   const [baselineDeviationValues, setBaselineDeviationValues] = useState(0);
-  const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter();
-  const chartData = formatGraphData(data.data);
+  const { formatGraphData, calculateGraphAlertBands } = useGraphDataFormatter(); // Formatter hook 
+  
+  
   const alertThresholds = {
     highRed: data?.bandThreshHoldValues?.highRedValue,
     highAmber: data?.bandThreshHoldValues?.highAmberValue,
@@ -38,58 +41,69 @@ const GraphPlotter = ({
     amberThreshold: amberThreshold,
     redThreshold: redThreshold,
   };
-
-  const alertBands = calculateGraphAlertBands(alertThresholds);
+  const alertBands = calculateGraphAlertBands(alertThresholds); // passes alert threshold to useGraphDataFormatter hook 
   const { lowAmber, lowRed, highAmber, highRed } = alertThresholds;
+  
+  const chartData = formatGraphData(data.data);
   const graphDataWithDeviation = chartData.formattedVitals;
   const lineGraphData = chartData.lineChartValues;
   const medianValue = chartData.median;
   const deviationGraph = chartData.deviationGraph;
   const formattedTimestamp = chartData.formattedTimestamp;
-  const topValueOfgraph = chartData?.lineChartValuesOnly ? Math.max(...chartData?.lineChartValuesOnly || "") : "";
-  const minValueOfgraph = chartData?.lineChartValuesOnly ? Math.min(...chartData?.lineChartValuesOnly || "") : "";
+  
+  // finds biggest and lowest values in a graph data
+  const topValueOfGraph = chartData?.lineChartValuesOnly ? Math.max(...chartData?.lineChartValuesOnly || "") : "";
+  const minValueOfGraph = chartData?.lineChartValuesOnly ? Math.min(...chartData?.lineChartValuesOnly || "") : "";
 
+  // finds higher threshold maximum and minimum value.
   const highThresholdMaximumValue = highAmber && highRed ? Math.max(...[highAmber, highRed]) : null;
   const lowThresholdMaximumValue = Math.min(...[highAmber, highRed]);
 
+  // finds lower threshold maximum and minimum value.
   const bottomThresholdMaximumValue = lowAmber && lowRed ? Math.max(...[lowAmber, lowRed]) : null;
   const bottomThresholdMinimumValue = Math.min(...[lowAmber, lowRed]);
 
+  // Deviation from baseline percentage and value calculation 
   useEffect(() => {
     setBaselineDeviationValues((baseLineValue / 100) * deviationFromBaseline);
   }, [deviationFromBaseline, baseLineValue]);
 
+  // To set the range of xAxis, To show from which date it should start
   useEffect(() => {
     setDateRange(formattedTimestamp?.[formattedTimestamp?.length - 12]);
   }, [formattedTimestamp, dateRange]);
 
+  // To set baseline
   useEffect(() => {
     if (isCalculatedValueShown === true) {
       setBaselineValue(medianValue);
     }
   }, [isCalculatedValueShown, medianValue, setBaselineValue]);
 
-  // conditions
-  const noAlerts = !highRed && !highAmber && !lowRed && !lowAmber // No alert points
+  // Conditions for alert values
+  const noAlerts = !highRed && !highAmber && !lowRed && !lowAmber 
   const allAlerts = highRed && highAmber && lowRed && lowAmber // All alert points present
-  const allAlertsCondition = (highRed > highAmber) && (lowAmber > lowRed) // condition to check which alert value is greater
+  const allAlertsCondition = (highRed > highAmber) && (lowAmber > lowRed) // To check biggest value
 
-  const onlyHighRed = highRed && !highAmber && !lowRed && !lowAmber //
+  // Only one value conditions
+  const onlyHighRed = highRed && !highAmber && !lowRed && !lowAmber 
   const onlyHighAmber = !highRed && highAmber && !lowRed && !lowAmber
   const onlyLowRed = !highRed && !highAmber && lowRed && !lowAmber
-  const onlylowAmber = !highRed && !highAmber && !lowRed && lowAmber
+  const onlyLowAmber = !highRed && !highAmber && !lowRed && lowAmber
 
+  // Only high or low value conditions
   const onlyHighValues = highRed && highAmber && !lowRed && !lowAmber
-  const onlyHighValuesCondition = highRed > highAmber
-
+  const onlyHighValuesCondition = highRed > highAmber // finds biggest value
   const onlyLowValues = !highRed && !highAmber && lowRed && lowAmber
-  const onlyLowValuesCondition = lowRed > lowAmber
+  const onlyLowValuesCondition = lowRed > lowAmber // finds biggest value
 
+  // Only only value in higher threshold and one value in lower threshold
   const onlyHighAmberAndLowAmber = !highRed && highAmber && !lowRed && lowAmber
   const onlyHighRedLowRed = highRed && !highAmber && lowRed && !lowAmber
   const onlyHighRedLowAmber = highRed && !highAmber && !lowRed && lowAmber
   const onlyHighAmberLowRed = !highRed && highAmber && lowRed && !lowAmber
 
+  // full higher threshold and one lower OR full lower and one higher value
   const onlyHighValuesAndLowRed = highRed && highAmber && lowRed && !lowAmber
   const onlyHighValuesAndLowAmber = highRed && highAmber && !lowRed && lowAmber
   const onlyLowValuesAndHighRed = highRed && !highAmber && lowRed && lowAmber
@@ -134,11 +148,12 @@ const GraphPlotter = ({
                     class: "customLine",
                     "stroke-width": 2.2,
                     zIndex: 4,
-                    stroke: noAlerts ? "transparent" :
+                    stroke: // marker color condition // 
+                    noAlerts ? "transparent" :
                       onlyHighRed ? point.y >= highRed ? "#F3857C" : "transparent" :
                         onlyHighAmber ? point.y >= highAmber ? "#FFB359" : "transparent" :
                           onlyLowRed ? point.y <= lowRed ? "#F3857C" : "transparent" :
-                            onlylowAmber ? point.y <= lowAmber ? "#FFB359" : "transparent" :
+                            onlyLowAmber ? point.y <= lowAmber ? "#FFB359" : "transparent" :
 
                               onlyHighValues ? onlyHighValuesCondition ? point.y >= highRed ? "#F3857C" : point.y >= highAmber ? "#FFB359" : "transparent" : point.y >= highAmber ? "#FFB359" : point.y >= highRed ? "#F3857C" : "transparent" :
                                 onlyLowValues ? onlyLowValuesCondition ? point.y <= lowAmber ? "#FFB359" : point.y <= lowRed ? "#F3857C" : "transparent" : point.y <= lowRed ? "#F3857C" : point.y <= lowAmber ? "#FFB359" : "transparent" :
@@ -161,17 +176,13 @@ const GraphPlotter = ({
               });
             });
             const data = chart.series[0].data;
-
             data.forEach((element) => {
-              console.log(
-
-              )
-              element.update({
+              element.update({ // marker color condition
                 color: noAlerts ? "#1499AD" :
                   onlyHighRed ? element.y >= highRed ? "#F3857C" : "#1499AD" :
                     onlyHighAmber ? element.y >= highAmber ? "#FFB359" : "#1499AD" :
                       onlyLowRed ? element.y <= lowRed ? "#F3857C" : "#1499AD" :
-                        onlylowAmber ? element.y <= lowAmber ? "#FFB359" : "#1499AD" :
+                        onlyLowAmber ? element.y <= lowAmber ? "#FFB359" : "#1499AD" :
 
                           onlyHighValues ? onlyHighValuesCondition ? element.y >= highRed ? "#F3857C" : element.y >= highAmber ? "#FFB359" : "#1499AD" : element.y >= highAmber ? "#FFB359" : element.y >= highRed ? "#F3857C" : "#1499AD" :
                             onlyLowValues ? onlyLowValuesCondition ? element.y <= lowAmber ? "#FFB359" : element.y <= lowRed ? "#F3857C" : "#1499AD" : element.y <= lowRed ? "#F3857C" : element.y <= lowAmber ? "#FFB359" : "#1499AD" :
@@ -214,7 +225,7 @@ const GraphPlotter = ({
                     ],
                   })
                   ?.attr({
-                    "stroke-width": thresholdIndicator ? 3 : 0,
+                    "stroke-width": thresholdIndicator ? 3 : 0, // shows and hide the vertical lines on condition
                   });
               });
             });
@@ -246,7 +257,6 @@ const GraphPlotter = ({
     },
 
     xAxis: {
-      // range: 1,
       min: dateRange,
       type: "datetime",
       gridLineWidth: 1,
@@ -262,7 +272,7 @@ const GraphPlotter = ({
       labels: {
         align: "center",
         useHTML: true,
-        formatter: function () {
+        formatter: function () { // Custom tooltip 
           const month = Highcharts.dateFormat("%b", this.value);
           const day = Highcharts.dateFormat("%e", this.value);
           return `<div class="daydateWrapper"><p class="dayDate" >${month}<br></p><p class="dayStyle">${day}</p></div>`;
@@ -285,9 +295,9 @@ const GraphPlotter = ({
           fontSize: "12px",
         },
       },
-      min: bottomThresholdMaximumValue ? bottomThresholdMinimumValue < minValueOfgraph ? bottomThresholdMinimumValue - ((bottomThresholdMaximumValue - bottomThresholdMinimumValue) / 2) : minValueOfgraph - ((10 / 100) * bottomThresholdMinimumValue) : null,
+      min: bottomThresholdMaximumValue ? bottomThresholdMinimumValue < minValueOfGraph ? bottomThresholdMinimumValue - ((bottomThresholdMaximumValue - bottomThresholdMinimumValue) / 2) : minValueOfGraph - ((10 / 100) * bottomThresholdMinimumValue) : null,
       max: highThresholdMaximumValue ?
-        topValueOfgraph > highThresholdMaximumValue ? topValueOfgraph + (15 / 100) * topValueOfgraph : topValueOfgraph < highThresholdMaximumValue ? highThresholdMaximumValue + ((highThresholdMaximumValue - lowThresholdMaximumValue) / 2) : ""
+        topValueOfGraph > highThresholdMaximumValue ? topValueOfGraph + (15 / 100) * topValueOfGraph : topValueOfGraph < highThresholdMaximumValue ? highThresholdMaximumValue + ((highThresholdMaximumValue - lowThresholdMaximumValue) / 2) : ""
         : null,
       tickColor: "#164f57ba",
       title: {
