@@ -35,13 +35,14 @@ const ChartControls = ({
               <div className="vitalValue">
                 <span>
                   <p className="labelValue">{latestVitalValue}</p>
-                  {latestVitalDeviation ? 
-                  <p className="minusPlusValue">
-                    <span>&#177;</span>
-                    {latestVitalDeviation}
-                  </p> : 
-                  ""}
-                  
+                  {latestVitalDeviation ? (
+                    <p className="minusPlusValue">
+                      <span>&#177;</span>
+                      {Math.round(latestVitalDeviation)}
+                    </p>
+                  ) : (
+                    ""
+                  )}
                 </span>
               </div>
             </div>
